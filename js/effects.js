@@ -79,7 +79,8 @@ class RomanticEffectsEngine {
 
   createAmbientParticles() {
     this.ambientParticles = [];
-    const count = 45;
+    const isMobile = window.innerWidth < 768;
+    const count = isMobile ? 20 : 45;
 
     const types = ['heart', 'petal', 'star', 'butterfly', 'sparkle'];
 
@@ -102,12 +103,13 @@ class RomanticEffectsEngine {
 
   createMiniPhotoParticles() {
     this.miniPhotoParticles = [];
-    const count = 18;
+    const isMobile = window.innerWidth < 768;
+    const count = isMobile ? 8 : 18;
 
     for (let i = 0; i < count; i++) {
       const imgIndex = i % this.miniPhotoImages.length;
-      // Mixed small (45px) to large (95px) sizes
-      const size = Math.floor(Math.random() * 50) + 45;
+      // Mixed small to large sizes
+      const size = Math.floor(Math.random() * (isMobile ? 30 : 50)) + (isMobile ? 40 : 45);
 
       this.miniPhotoParticles.push({
         x: Math.random() * window.innerWidth,

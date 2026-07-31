@@ -1777,6 +1777,14 @@ body {
     font-size: 2.1rem !important;
   }
 
+  /* GPU Hardware Acceleration & Mobile Backdrop Blur Performance Optimizations */
+  .glass-card, .compact-deck-nav, .funny-disclaimer-box, .cert-container {
+    backdrop-filter: blur(8px) !important;
+    -webkit-backdrop-filter: blur(8px) !important;
+    transform: translateZ(0);
+    will-change: transform;
+  }
+
   .album-card {
     padding: 1.2rem;
     min-height: auto;
