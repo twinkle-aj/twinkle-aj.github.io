@@ -65,22 +65,22 @@
 
     .grand-sub {
       font-family: var(--font-script);
-      font-size: 2.5rem;
+      font-size: 2.4rem;
       color: var(--accent-gold);
-      margin-bottom: 3rem;
+      margin-bottom: 0.5rem;
       text-shadow: 0 0 15px var(--gold-glow);
     }
 
     /* 3D Love Certificate Card */
     .cert-container {
-      background: radial-gradient(circle, rgba(38, 14, 56, 0.9) 0%, rgba(16, 6, 26, 0.95) 100%);
-      border: 2px solid rgba(255, 224, 130, 0.6);
-      border-radius: 36px;
-      padding: 3.5rem 2.5rem;
-      box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 40px rgba(255, 75, 114, 0.25);
+      background: radial-gradient(circle, rgba(38, 14, 56, 0.92) 0%, rgba(16, 6, 26, 0.96) 100%);
+      border: 2px solid rgba(255, 224, 130, 0.65);
+      border-radius: 32px;
+      padding: 3rem 2.2rem;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.75), 0 0 40px rgba(255, 75, 114, 0.3);
       position: relative;
       overflow: hidden;
-      margin-bottom: 3rem;
+      margin-bottom: 2.5rem;
       transform: perspective(1000px) rotateX(2deg);
       transition: transform 0.5s ease;
     }
@@ -89,24 +89,36 @@
       transform: perspective(1000px) rotateX(0deg) scale(1.01);
     }
 
+    .cert-seal-badge-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.8rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .filigree-line {
+      font-size: 1.6rem;
+      color: var(--accent-gold);
+      opacity: 0.85;
+    }
+
     .cert-seal-badge {
-      width: 80px;
-      height: 80px;
+      width: 70px;
+      height: 70px;
       border-radius: 50%;
       background: linear-gradient(135deg, #ff4b72 0%, #ff758c 100%);
       border: 3px solid #ffe082;
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 1.5rem;
       box-shadow: 0 0 25px var(--rose-glow);
       animation: floatBadge 3s ease-in-out infinite alternate;
     }
 
     @keyframes floatBadge {
       0% { transform: translateY(0); }
-      100% { transform: translateY(-8px); }
+      100% { transform: translateY(-6px); }
     }
 
     .cert-seal-badge i {
@@ -114,28 +126,125 @@
       color: #fff;
     }
 
-    .cert-text {
-      font-size: 1.15rem;
-      line-height: 1.8;
-      color: var(--text-muted);
-      max-width: 700px;
-      margin: 0 auto 2rem;
+    .cert-meta-bar {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      margin: 0 auto 1.2rem;
+      max-width: 720px;
+      width: 100%;
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #ffffff;
     }
 
-    .cert-text strong {
-      color: #fff;
-      font-weight: 700;
+    .meta-item {
+      flex: 1 1 0px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.06);
+      padding: 0.55rem 1.1rem;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 224, 130, 0.3);
+      text-align: center;
+    }
+
+    .meta-item i {
+      color: var(--primary-rose);
+      font-size: 1.1rem;
+    }
+
+    .meta-sep {
+      flex: 0 0 auto;
+      color: var(--accent-gold);
+      font-size: 1.4rem;
+      font-weight: 300;
+      opacity: 0.75;
+    }
+
+    .cert-divider-line {
+      width: 100%;
+      height: 1px;
+      border-bottom: 1.5px dashed rgba(255, 224, 130, 0.35);
+      margin: 1.2rem 0;
+    }
+
+    .cert-promise-title {
+      font-family: var(--font-serif);
+      font-size: 2.4rem;
+      color: #ffffff;
+      margin-bottom: 0.3rem;
+    }
+
+    .cert-promise-sub {
+      color: var(--accent-gold);
+      font-size: 1.1rem;
+      margin-bottom: 1rem;
+    }
+
+    .cert-text {
+      font-size: 1.08rem;
+      line-height: 1.8;
+      color: rgba(255, 255, 255, 0.9);
+      max-width: 660px;
+      margin: 0 auto 1.2rem;
+    }
+
+    .cert-names-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      margin-top: 1.2rem;
+    }
+
+    .couple-name {
+      font-family: var(--font-script);
+      font-size: 3.4rem;
+      color: #ff8fa3;
+      text-shadow: 0 0 15px rgba(255, 143, 163, 0.6);
+    }
+
+    .couple-heart {
+      font-size: 2.2rem;
+      animation: pulseGlow 2s ease-in-out infinite alternate;
+    }
+
+    .forever-subtitle {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: var(--accent-gold);
+      margin-top: 0.3rem;
+      letter-spacing: 1px;
+    }
+
+    .cert-quote-box {
+      margin: 1.5rem auto 1.2rem;
+      padding: 0.8rem 1.5rem;
+      border-top: 1px solid rgba(255, 224, 130, 0.25);
+      border-bottom: 1px solid rgba(255, 224, 130, 0.25);
+      max-width: 580px;
+      font-family: var(--font-serif);
+      font-style: italic;
+      font-size: 1.2rem;
+      color: #ffffff;
+    }
+
+    .quote-mark {
+      font-size: 1.6rem;
+      color: var(--accent-gold);
+      margin-right: 0.4rem;
     }
 
     .cert-signatures {
       display: flex;
-      justify-content: space-around;
-      align-items: center;
-      margin-top: 2.5rem;
-      padding-top: 1.8rem;
-      border-top: 1px dashed rgba(255, 224, 130, 0.3);
-      flex-wrap: wrap;
-      gap: 1.5rem;
+      justify-content: space-between;
+      align-items: flex-end;
+      margin-top: 1.5rem;
+      padding-top: 0.5rem;
     }
 
     .sig-block {
@@ -146,52 +255,28 @@
 
     .sig-name {
       font-family: var(--font-script);
-      font-size: 2rem;
-      color: var(--secondary-pink);
+      font-size: 2.2rem;
+      color: var(--accent-gold);
     }
 
     .sig-title {
+      font-size: 0.85rem;
+      color: #ff8fa3;
+      font-weight: 600;
+      margin-top: 0.1rem;
+    }
+
+    .sig-dots {
       font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      color: var(--text-muted);
+      color: rgba(255, 255, 255, 0.4);
+      margin-top: 0.3rem;
     }
 
-    /* Floating Memories Carousel */
-    .memories-carousel {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-      gap: 1.5rem;
-      margin-bottom: 3rem;
-    }
-
-    .memory-polaroid {
-      background: rgba(255, 255, 255, 0.08);
-      border: 1px solid var(--glass-border);
-      border-radius: 20px;
-      padding: 0.8rem;
-      backdrop-filter: blur(16px);
-      transition: all 0.4s ease;
-      cursor: pointer;
-    }
-
-    .memory-polaroid:hover {
-      transform: translateY(-8px) rotate(2deg) scale(1.03);
-      box-shadow: 0 15px 35px var(--rose-glow);
-    }
-
-    .memory-polaroid img {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 14px;
-      margin-bottom: 0.8rem;
-    }
-
-    .memory-polaroid p {
-      font-family: var(--font-serif);
-      font-size: 0.95rem;
-      color: #fff;
+    .sig-center-date {
+      font-size: 1.15rem;
+      font-weight: 700;
+      color: #ffffff;
+      letter-spacing: 3px;
     }
 
     /* Action Toolbar */
@@ -200,13 +285,21 @@
       justify-content: center;
       gap: 1.2rem;
       flex-wrap: wrap;
+      margin-top: 1.5rem;
     }
 
     @media (max-width: 768px) {
       .grand-headline { font-size: 2.4rem; }
       .grand-sub { font-size: 1.8rem; }
       .cert-container { padding: 2rem 1.2rem; }
-      .cert-text { font-size: 0.95rem; }
+      .couple-name { font-size: 2.5rem; }
+      .cert-promise-title { font-size: 1.9rem; }
+      .cert-text { font-size: 0.98rem; }
+      .cert-signatures {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.2rem;
+      }
     }
   </style>
 </head>
@@ -226,62 +319,67 @@
     
     <!-- Grand Entrance Headline -->
     <div class="grand-sub">My Heart Belongs To You...</div>
-    <h1 class="grand-headline">SHE SAID YES! 🎉💖</h1>
+    <h1 class="grand-headline">SHE CHOOSE YES! 🎉💖</h1>
 
     <!-- 3D Love Certificate -->
     <div class="cert-container shimmer-card">
-      <div class="cert-seal-badge">
-        <i class="fas fa-heart"></i>
+      <div class="cert-seal-badge-wrap">
+        <span class="filigree-line">꧁༺</span>
+        <div class="cert-seal-badge">
+          <i class="fas fa-heart"></i>
+        </div>
+        <span class="filigree-line">༻꧂</span>
       </div>
-      <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: #fff; margin-bottom: 1rem;">
-        Certificate of Eternal Love & Devotion
-      </h2>
+
+      <div class="cert-meta-bar">
+        <div class="meta-item"><i class="fas fa-calendar-alt"></i> <span>20 April 2026</span></div>
+        <div class="meta-sep">|</div>
+        <div class="meta-item"><i class="fas fa-home"></i> <span>Sweet Home Inauguration & Roka (Aashirwad)</span></div>
+      </div>
+
+      <div class="cert-divider-line"></div>
+
+      <h2 class="cert-promise-title">🌿 Our Forever Promise 🌿</h2>
+      <p class="cert-promise-sub">• 💖 •</p>
+
       <p class="cert-text">
-        Let it be known for all eternity that on this magical day, <strong>Our Hearts Were Bound Forever</strong>. Every sunrise, every sunset, every laugh, and every quiet moment from this day forward belongs to our beautiful journey together.
+        On this special day, surrounded by our families,<br>
+        we promised to walk through every season of life together.<br>
+        This wasn't just our Roka—it was the beginning of our forever.<br>
+        Every smile, every dream, and every memory from this day onward<br>
+        belongs to us. 💖
       </p>
+
+      <div class="cert-divider-line"></div>
+
+      <div class="cert-names-wrap">
+        <span class="couple-name">Twinkle</span>
+        <span class="couple-heart">💖</span>
+        <span class="couple-name">Atanu</span>
+      </div>
+      <div class="forever-subtitle">— 💕 Forever Starts Here 💕 —</div>
+
+      <div class="cert-quote-box">
+        <span class="quote-mark">“</span>
+        The best decision of my life was finding you. 💖
+      </div>
 
       <div class="cert-signatures">
         <div class="sig-block">
-          <span class="sig-name">My Forever Love 💖</span>
-          <span class="sig-title">Yours Always</span>
+          <span class="sig-name">Twinkle</span>
+          <span class="sig-title">Forever Mine 💕</span>
+          <span class="sig-dots">• 💕 •</span>
         </div>
-        <div style="font-size: 1.8rem; color: var(--accent-gold);">✨ 💍 ✨</div>
+
+        <div class="sig-center-date">
+          🌿 20 • 04 • 2026 🌿
+        </div>
+
         <div class="sig-block">
-          <span class="sig-name">My Soulmate 🌹</span>
-          <span class="sig-title">My Heart & Soul</span>
+          <span class="sig-name">Atanu</span>
+          <span class="sig-title">Forever Yours 💕</span>
+          <span class="sig-dots">• 💕 •</span>
         </div>
-      </div>
-    </div>
-
-    <!-- Floating Memories Polaroid Cards -->
-    <h2 style="font-family: var(--font-serif); font-size: 2rem; color: #fff; margin-bottom: 1.5rem;">
-      Our Precious Moments 📸✨
-    </h2>
-
-    <div class="memories-carousel">
-      <div class="memory-polaroid">
-        <img src="assets/images/album_photos/album1.jpeg" alt="Memory 1">
-        <p>Starlight Magic ✨</p>
-      </div>
-      <div class="memory-polaroid">
-        <img src="assets/images/album_photos/album2.jpeg" alt="Memory 2">
-        <p>Golden Hour Laughter 🌅</p>
-      </div>
-      <div class="memory-polaroid">
-        <img src="assets/images/album_photos/album3.jpeg" alt="Memory 3">
-        <p>Blossom Strolls 🌸</p>
-      </div>
-      <div class="memory-polaroid">
-        <img src="assets/images/album_photos/album4.jpeg" alt="Memory 4">
-        <p>Infinite Stars 🌌</p>
-      </div>
-      <div class="memory-polaroid">
-        <img src="assets/images/album_photos/album5.jpeg" alt="Memory 5">
-        <p>Forever Devotion 🌹</p>
-      </div>
-      <div class="memory-polaroid">
-        <img src="assets/images/album_photos/album6.jpeg" alt="Memory 6">
-        <p>Forever & Always 💞</p>
       </div>
     </div>
 
@@ -290,8 +388,11 @@
       <button class="btn-primary interactive" id="launch-fireworks-btn">
         <i class="fas fa-sparkles"></i> Launch Fireworks! 🎆
       </button>
-      <a href="index.html?stopMusic=true" class="btn-primary interactive return-home-link" style="background: rgba(255,255,255,0.12); border: 1px solid var(--glass-border);">
-        <i class="fas fa-undo"></i> Replay Our Story 🌸
+      <a href="index.html?stopMusic=true" class="btn-primary interactive return-home-link" style="background: rgba(255, 143, 163, 0.2); border: 1px solid var(--primary-rose);">
+        <i class="fas fa-book-open"></i> Replay Our Story 🌸
+      </a>
+      <a href="index.html?stopMusic=true" class="btn-primary interactive return-home-link" style="background: rgba(255, 255, 255, 0.12); border: 1px solid var(--glass-border);">
+        <i class="fas fa-home"></i> Back to Home 🏠
       </a>
     </div>
 
