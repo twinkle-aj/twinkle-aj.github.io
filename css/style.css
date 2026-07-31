@@ -115,6 +115,16 @@ body {
   padding: 0 1rem;
 }
 
+.landing-tagline {
+  font-family: var(--font-script);
+  font-size: 1.55rem;
+  color: var(--accent-gold);
+  margin-top: 0.35rem;
+  text-shadow: 0 0 12px var(--gold-glow);
+  text-align: center;
+  padding: 0 1rem;
+}
+
 .glow-filigree {
   font-size: 1.1rem;
   color: var(--accent-gold);
@@ -1670,6 +1680,71 @@ body {
 .album-grid {
   gap: 1.8rem;
   margin-top: 1.8rem;
+}
+
+/* Childhood Memories Section */
+.childhood-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+  gap: 1.8rem;
+  margin: 1.8rem auto 0;
+  max-width: 720px;
+}
+
+.childhood-card {
+  padding: 1.2rem;
+  border-radius: 24px;
+  transition: all 0.4s var(--transition-smooth);
+}
+
+.childhood-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 18px 40px var(--rose-glow);
+}
+
+.polaroid-frame {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 0.8rem;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 224, 130, 0.3);
+}
+
+.childhood-img-box {
+  width: 100%;
+  height: 250px;
+  border-radius: 14px;
+  overflow: hidden;
+  position: relative;
+}
+
+.childhood-img-box img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.childhood-card:hover .childhood-img-box img {
+  transform: scale(1.08);
+}
+
+.polaroid-label {
+  text-align: center;
+  margin-top: 0.9rem;
+}
+
+.polaroid-label h3 {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  color: #ffffff;
+  margin-bottom: 0.25rem;
+}
+
+.polaroid-label p {
+  font-size: 0.85rem;
+  color: var(--accent-gold);
+  font-style: italic;
+  margin: 0;
 }
 
 .album-card {

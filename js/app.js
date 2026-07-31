@@ -59,8 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (e && e.stopPropagation) e.stopPropagation();
       if (window.audioEngine) window.audioEngine.play();
 
-      // Advancing from Hero section goes to Bubbles
-      switchDeckSlide('bubbles');
+      // Advancing from Hero section goes to Little Us (childhood)
+      switchDeckSlide('childhood');
     });
   }
 

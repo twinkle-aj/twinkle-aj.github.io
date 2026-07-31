@@ -169,7 +169,19 @@ class RomanticAudioEngine {
         let elem = document.getElementById(`custom-audio-${idx}`);
         if (!elem) {
           elem = new Audio(track.path);
-          elem.loop = true;
+          elem.loop = false;
+          elem.addEventListener('ended', () => {
+            if (!this.userHasManuallyPaused) {
+              this.toggleNextTrack();
+            }
+          });
+        } else {
+          elem.loop = false;
+          elem.onended = () => {
+            if (!this.userHasManuallyPaused) {
+              this.toggleNextTrack();
+            }
+          };
         }
         elem.volume = this.currentVolume;
         this.audioElements[idx] = elem;
