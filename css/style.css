@@ -68,7 +68,7 @@ body {
   z-index: 99;
 }
 
-/* Loading Screen */
+/* Loading Screen / Landing Page */
 #loading-screen {
   position: fixed;
   inset: 0;
@@ -76,10 +76,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 2.5rem 1rem 3.5rem;
   z-index: 1000;
   cursor: pointer;
   transition: opacity 1.2s var(--transition-smooth), visibility 1.2s;
+  -webkit-overflow-scrolling: touch;
 }
 
 .heart-loader {
@@ -101,25 +105,33 @@ body {
   100% { transform: scale(1.15); opacity: 1; }
 }
 
-.loading-text {
-  margin-top: 2rem;
+.loading-title {
+  margin-top: 1.2rem;
   font-family: var(--font-serif);
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   color: var(--secondary-pink);
-  letter-spacing: 1px;
+  text-shadow: 0 0 20px var(--rose-glow);
   text-align: center;
+  padding: 0 1rem;
 }
 
-/* Funny & Attractive QA Disclaimer Card */
+.glow-filigree {
+  font-size: 1.1rem;
+  color: var(--accent-gold);
+  margin-top: 0.2rem;
+  opacity: 0.85;
+}
+
+/* Romantic Love Letter Card */
 .funny-disclaimer-box {
-  margin: 1.4rem auto 1.5rem;
-  max-width: 480px;
+  margin: 1.2rem auto 1.2rem;
+  max-width: 520px;
   width: 90%;
-  padding: 1.25rem 1.6rem;
-  border-radius: 20px;
-  background: rgba(35, 12, 54, 0.7);
-  border: 1px dashed rgba(255, 224, 130, 0.45);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 75, 114, 0.15);
+  padding: 1.6rem 1.8rem;
+  border-radius: 26px;
+  background: rgba(28, 9, 44, 0.78);
+  border: 1px dashed rgba(255, 224, 130, 0.5);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6), 0 0 30px rgba(255, 75, 114, 0.2);
   animation: floatDisclaimer 3.5s ease-in-out infinite alternate;
   text-align: center;
 }
@@ -130,29 +142,137 @@ body {
 }
 
 .disclaimer-header {
-  font-size: 0.88rem;
+  font-family: var(--font-serif);
+  font-size: 1.45rem;
   font-weight: 700;
-  letter-spacing: 1.8px;
   color: var(--accent-gold);
-  margin-bottom: 0.6rem;
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  text-transform: uppercase;
+  text-shadow: 0 0 12px var(--gold-glow);
 }
 
 .disclaimer-text {
-  font-size: 0.95rem;
-  line-height: 1.6;
+  font-size: 0.96rem;
+  line-height: 1.65;
   color: rgba(255, 255, 255, 0.92);
   margin: 0;
   font-family: var(--font-sans);
 }
 
-.disclaimer-text strong {
-  color: var(--secondary-pink);
+.letter-greeting {
+  font-family: var(--font-serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ff8fa3;
+  margin-bottom: 0.6rem;
+}
+
+.letter-p {
+  margin-bottom: 0.6rem;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.letter-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0.8rem 0;
+  position: relative;
+}
+
+.letter-divider::before, .letter-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  border-bottom: 1px dashed rgba(255, 224, 130, 0.3);
+}
+
+.letter-divider span {
+  padding: 0 0.6rem;
+  font-size: 0.85rem;
+}
+
+.letter-callout-box {
+  background: rgba(255, 75, 114, 0.12);
+  border: 1px solid rgba(255, 143, 163, 0.4);
+  border-radius: 16px;
+  padding: 0.9rem 1.2rem;
+  margin: 0.9rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  box-shadow: inset 0 0 15px rgba(255, 75, 114, 0.15);
+}
+
+.callout-text {
+  font-size: 0.98rem;
   font-weight: 600;
+  color: #ffffff;
+  text-align: left;
+  line-height: 1.6;
+}
+
+.highlight-accent {
+  color: #ff8fa3;
+  font-weight: 700;
+  text-shadow: 0 0 10px rgba(255, 143, 163, 0.5);
+}
+
+.callout-heart {
+  font-size: 1.6rem;
+  flex: 0 0 auto;
+  animation: heartPulse 1.8s ease-in-out infinite alternate;
+}
+
+.letter-ps {
+  font-size: 0.85rem;
+  color: var(--accent-gold);
+  font-style: italic;
+  margin-top: 0.8rem;
+}
+
+.start-btn-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.2rem;
+  width: 100%;
+  max-width: 520px;
+}
+
+.btn-filigree {
+  font-size: 1.5rem;
+  color: var(--accent-gold);
+  opacity: 0.85;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#loading-start-btn {
+  white-space: nowrap !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 1rem 2.2rem;
+  font-size: 1.1rem;
+}
+
+.landing-footer-quote {
+  font-family: var(--font-script);
+  font-size: 1.5rem;
+  color: var(--accent-gold);
+  margin-top: 1rem;
+  text-align: center;
+  padding: 0 1rem;
+  text-shadow: 0 0 12px var(--gold-glow);
 }
 
 @keyframes fadeInOut {
@@ -262,12 +382,14 @@ body {
   background: linear-gradient(135deg, #ff4b72 0%, #ff758c 100%);
   color: #fff;
   border: none;
-  padding: 1.1rem 2.8rem;
-  font-size: 1.15rem;
+  padding: 1.05rem 2.5rem;
+  font-size: 1.12rem;
   font-weight: 600;
   border-radius: 50px;
   display: inline-flex;
   align-items: center;
+  justify-content: center;
+  white-space: nowrap;
   gap: 0.75rem;
   box-shadow: 0 10px 25px var(--rose-glow);
   transition: all 0.4s var(--transition-smooth);
@@ -1454,19 +1576,14 @@ body {
 /* Compact Storybook Deck Layout */
 .compact-deck-nav {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
   gap: 0.4rem;
-  padding: 0.5rem 0.9rem !important;
+  padding: 0.45rem 0.8rem !important;
   border-radius: 50px;
   margin: 1rem auto 2.2rem !important;
-  width: calc(100vw - 1.5rem);
-  max-width: 760px;
-  overflow-x: auto;
-  overflow-y: hidden;
-  white-space: nowrap;
-  scroll-padding-left: 0.9rem;
-  scroll-padding-right: 0.9rem;
+  width: fit-content;
+  max-width: 90vw;
   position: relative;
   z-index: 400;
   background: rgba(16, 7, 28, 0.92);
@@ -1578,18 +1695,18 @@ body {
 }
 
 .birthday-section {
-  padding: 3.5rem 2rem;
-  margin-bottom: 3rem;
+  padding: 2.5rem 1.8rem;
+  margin-bottom: 2.5rem;
   border-radius: 28px;
 }
 
 .countdown-container {
-  gap: 1.6rem;
-  margin: 2.2rem 0 1.5rem;
+  gap: 1.4rem;
+  margin: 1.8rem 0 1rem;
 }
 
 .countdown-box {
-  padding: 1.8rem 2.2rem;
+  padding: 1.6rem 2rem;
   min-width: 120px;
   border-radius: 22px;
 }
@@ -1602,6 +1719,14 @@ body {
 
 @media (max-width: 768px) {
   .compact-deck-nav {
+    display: flex !important;
+    justify-content: flex-start !important;
+    align-items: center !important;
+    width: calc(100vw - 1.5rem) !important;
+    max-width: 760px !important;
+    overflow-x: auto !important;
+    overflow-y: hidden !important;
+    white-space: nowrap !important;
     margin: 0.3rem auto 1.2rem !important;
     padding: 0.4rem 0.75rem !important;
   }
@@ -1617,13 +1742,39 @@ body {
     margin: 1rem 0 2rem !important;
   }
 
+  .birthday-section {
+    padding: 1.8rem 1.2rem 1.8rem !important;
+    margin-bottom: 1.8rem !important;
+    border-radius: 24px !important;
+  }
+
+  .birthday-section .section-title {
+    font-size: 1.65rem !important;
+    margin-top: 0.2rem !important;
+    margin-bottom: 0.5rem !important;
+    line-height: 1.25 !important;
+  }
+
+  .birthday-section .section-subtitle {
+    font-size: 0.92rem !important;
+    margin-bottom: 1rem !important;
+    line-height: 1.5 !important;
+    padding: 0 0.5rem !important;
+  }
+
+  .countdown-container {
+    gap: 0.85rem !important;
+    margin: 0.9rem 0 0.4rem !important;
+  }
+
   .countdown-box {
-    padding: 1.1rem 0.8rem !important;
+    padding: 1.1rem 0.6rem !important;
     min-width: auto !important;
+    border-radius: 18px !important;
   }
 
   .countdown-number {
-    font-size: 2.1rem;
+    font-size: 2.1rem !important;
   }
 
   .album-card {
@@ -1641,5 +1792,68 @@ body {
 
   .section-subtitle, .hero-subtitle, .proposal-sub {
     font-size: 1.1rem !important;
+  }
+
+  /* Landing Page Mobile Responsiveness */
+  #loading-screen {
+    padding: 1.8rem 0.8rem 3rem !important;
+  }
+
+  .heart-loader {
+    width: 60px !important;
+    height: 60px !important;
+  }
+
+  .loading-title {
+    font-size: 1.35rem !important;
+    margin-top: 0.8rem !important;
+  }
+
+  .funny-disclaimer-box {
+    margin: 0.9rem auto 1rem !important;
+    padding: 1.25rem 1.1rem !important;
+    width: 95% !important;
+    border-radius: 20px !important;
+  }
+
+  .disclaimer-header {
+    font-size: 1.2rem !important;
+    margin-bottom: 0.8rem !important;
+  }
+
+  .disclaimer-text {
+    font-size: 0.88rem !important;
+    line-height: 1.6 !important;
+  }
+
+  .letter-greeting {
+    font-size: 1.05rem !important;
+  }
+
+  .letter-callout-box {
+    padding: 0.75rem 0.9rem !important;
+    flex-direction: column !important;
+    gap: 0.5rem !important;
+    text-align: center !important;
+  }
+
+  .callout-text {
+    font-size: 0.88rem !important;
+    text-align: center !important;
+  }
+
+  .btn-filigree {
+    font-size: 1.1rem !important;
+  }
+
+  #loading-start-btn {
+    padding: 0.85rem 1.6rem !important;
+    font-size: 1.0rem !important;
+    white-space: nowrap !important;
+  }
+
+  .landing-footer-quote {
+    font-size: 1.2rem !important;
+    margin-top: 0.8rem !important;
   }
 }
