@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Our Story - A Romantic Journey</title>
+  <meta name="description" content="A magical, interactive romantic journey filled with floating photo bubbles, background music, love trails, ambient particle effects, and cherished memories.">
+
+  <!-- Fonts & FontAwesome Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Background Canvases -->
+  <canvas id="ambient-canvas"></canvas>
+  <canvas id="love-trail-canvas"></canvas>
+
+  <!-- Loading Screen -->
+  <div id="loading-screen">
+    <div class="heart-loader">
+      <svg viewBox="0 0 24 24">
+        <defs>
+          <linearGradient id="rose-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff758c" />
+            <stop offset="100%" stop-color="#ff4b72" />
+          </linearGradient>
+        </defs>
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+    </div>
+    <div class="loading-text">Preparing Something Special Just for You...</div>
+    
+    <!-- Funny & Romantic QA Disclaimer Card -->
+    <div class="funny-disclaimer-box glass-card">
+      <div class="disclaimer-header"><i class="fas fa-shield-cat"></i> OFFICIAL QA DISCLAIMER 🙈</div>
+      <p class="disclaimer-text">
+        I know you're a world-class <strong>QA Tester</strong> with super-bug-hunting powers, and <strong>I'm just a developer</strong> head over heels in love with you... 🙈💻<br><br>
+        So please, don't sit here doing code reviews, edge-case testing, or looking for bugs! 🤫 This website wasn't built for QA deployment — it's about 100% pure love, <strong>about us</strong>, and created just for you, my favorite person in the whole wide world! 💕✨<br><br>
+        <span style="font-size: 0.85rem; color: var(--accent-gold); font-style: italic;">(P.S. Any bugs you find are actually undocumented romantic features! 🌹😉)</span>
+      </p>
+    </div>
+
+    <button class="btn-primary interactive" id="loading-start-btn">
+      <i class="fas fa-heart"></i> Start Our Story
+    </button>
+  </div>
+
+  <!-- Top Control Bar (3 Visual Experience Modes Toggler) -->
+  <div class="top-controls">
+    <div class="mode-toggler-pill">
+      <button class="mode-toggle-btn active interactive" data-mode="1" title="Option 1: Magical Hearts & Sparkles (Default)">
+        <i class="fas fa-sparkles"></i> <span>Magical</span>
+      </button>
+      <button class="mode-toggle-btn interactive" data-mode="2" title="Option 2: Minimalist & Clean (Effects Off)">
+        <i class="fas fa-moon"></i> <span>Minimal</span>
+      </button>
+      <button class="mode-toggle-btn interactive" data-mode="3" title="Option 3: Floating Photos & Soft Sparkles">
+        <i class="fas fa-images"></i> <span>Floating Photos</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main App Wrapper -->
+  <div id="app-wrapper">
+
+    <!-- Compact Story Deck Navigation -->
+    <div class="compact-deck-nav glass-card">
+      <button class="deck-tab-btn active interactive" data-deck-target="hero"><i class="fas fa-heart"></i> Story</button>
+      <button class="deck-tab-btn interactive" data-deck-target="bubbles"><i class="fas fa-sparkles"></i> Bubbles</button>
+      <button class="deck-tab-btn interactive" data-deck-target="album"><i class="fas fa-images"></i> Album</button>
+      <button class="deck-tab-btn interactive" data-deck-target="timeline"><i class="fas fa-book-open"></i> Journey</button>
+      <button class="deck-tab-btn interactive" data-deck-target="birthday"><i class="fas fa-cake-candles"></i> Birthday</button>
+      <button class="deck-tab-btn interactive" data-deck-target="proposal"><i class="fas fa-ring"></i> Proposal</button>
+    </div>
+
+    <!-- Hero Section Slide -->
+    <section class="hero-section deck-slide active" id="deck-hero">
+      <div class="hero-subtitle">Every love story is beautiful, but ours is my favorite...</div>
+      <h1 class="hero-title">Our Romantic Story</h1>
+      <p class="hero-desc">
+        Welcome to a magical realm created just for us. Explore our interactive memories, floating photo bubbles, and gentle melodies crafted with all my love.
+      </p>
+      <button class="btn-primary interactive" id="start-story-btn">
+        <i class="fas fa-heart"></i> Start Our Story
+      </button>
+    </section>
+
+    <!-- Floating Photo Bubbles Realm Slide -->
+    <section class="deck-slide" id="deck-bubbles">
+      <div class="bubbles-header">
+        <h2>Floating Memories</h2>
+        <p>Tap any floating photo bubble to reveal the story behind the moment</p>
+        <button class="shuffle-bubbles-btn interactive" id="shuffle-bubbles-btn">
+          <i class="fas fa-arrows-rotate"></i> Shuffle Photos 🌸
+        </button>
+      </div>
+      <div class="bubbles-container glass-card" id="bubbles-realm"></div>
+    </section>
+
+    <!-- Memory Photo Album Section Slide -->
+    <section class="album-section deck-slide" id="deck-album">
+      <h2 class="section-title">Our Romantic Album 📸💖</h2>
+      <p class="section-subtitle">Moments frozen in time, forever captured in my heart</p>
+
+      <div class="album-grid">
+        <div class="album-card glass-card interactive" data-img="assets/images/album_photos/album1.jpeg" data-title="Under Fairy Lights ✨" data-note="Holding your hand under the fairy lights is my favorite place in the world.">
+          <div class="album-img-box">
+            <img src="assets/images/album_photos/album1.jpeg" alt="Album Photo 1">
+          </div>
+          <div class="album-info">
+            <h3>Under Fairy Lights ✨</h3>
+            <p>Our Starlight Memories</p>
+          </div>
+        </div>
+
+        <div class="album-card glass-card interactive" data-img="assets/images/album_photos/album2.jpeg" data-title="Sunset Laughter 🌅" data-note="Your smile lights up my world brighter than the golden sunset.">
+          <div class="album-img-box">
+            <img src="assets/images/album_photos/album2.jpeg" alt="Album Photo 2">
+          </div>
+          <div class="album-info">
+            <h3>Sunset Laughter 🌅</h3>
+            <p>Golden Hour Moments</p>
+          </div>
+        </div>
+
+        <div class="album-card glass-card interactive" data-img="assets/images/album_photos/album3.jpeg" data-title="Blossom Stroll 🌸" data-note="Every walk with you feels like walking through sweet blossoms.">
+          <div class="album-img-box">
+            <img src="assets/images/album_photos/album3.jpeg" alt="Album Photo 3">
+          </div>
+          <div class="album-info">
+            <h3>Blossom Stroll 🌸</h3>
+            <p>Springtime Romance</p>
+          </div>
+        </div>
+
+        <div class="album-card glass-card interactive" data-img="assets/images/album_photos/album4.jpeg" data-title="Starry Night 🌌" data-note="Under the infinite stars, my heart will always choose you.">
+          <div class="album-img-box">
+            <img src="assets/images/album_photos/album4.jpeg" alt="Album Photo 4">
+          </div>
+          <div class="album-info">
+            <h3>Starry Night 🌌</h3>
+            <p>Infinite Love</p>
+          </div>
+        </div>
+
+        <div class="album-card glass-card interactive" data-img="assets/images/album_photos/album5.jpeg" data-title="Sweet Eternal Hold 🌹" data-note="My heart has found its forever home in your embrace.">
+          <div class="album-img-box">
+            <img src="assets/images/album_photos/album5.jpeg" alt="Album Photo 5">
+          </div>
+          <div class="album-info">
+            <h3>Sweet Eternal Hold 🌹</h3>
+            <p>Forever Devotion</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Memory Timeline Section Slide -->
+    <section class="deck-slide" id="deck-timeline">
+      <h2 class="section-title">Chapters of Our Love</h2>
+      <p class="section-subtitle">A timeline of moments that took my breath away</p>
+
+      <div class="timeline-grid">
+        <div class="timeline-card glass-card">
+          <div class="card-icon">✨</div>
+          <h3 class="card-title">The First Spark</h3>
+          <p class="card-desc">The moment our eyes met, time stood still. I knew right then that something extraordinary had entered my life.</p>
+        </div>
+
+        <div class="timeline-card glass-card">
+          <div class="card-icon">🌹</div>
+          <h3 class="card-title">Endless Midnight Talks</h3>
+          <p class="card-desc">Hours felt like seconds as we shared our deepest dreams, laughter, and secrets under the midnight sky.</p>
+        </div>
+
+        <div class="timeline-card glass-card">
+          <div class="card-icon">🥂</div>
+          <h3 class="card-title">Our Favorite Adventures</h3>
+          <p class="card-desc">From quiet sunset strolls to spontaneous road trips, every place becomes paradise when I'm beside you.</p>
+        </div>
+
+        <div class="timeline-card glass-card">
+          <div class="card-icon">💍</div>
+          <h3 class="card-title">Forever & Always</h3>
+          <p class="card-desc">With every passing day, my love for you grows deeper. You are my heart, my soul, and my forever.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Birthday Countdown Section Slide -->
+    <section class="birthday-section glass-card deck-slide" id="deck-birthday">
+      <h2 class="section-title" style="margin-top: 0;">Countdown to My Special Day 🎂✨</h2>
+      <p class="section-subtitle" style="margin-bottom: 1.5rem;">Counting down every second to the day my world became brighter — Your Birthday 💖</p>
+
+      <div class="countdown-container">
+        <div class="countdown-box glass-card">
+          <span class="countdown-number" id="cd-days">00</span>
+          <span class="countdown-label">Days</span>
+        </div>
+        <div class="countdown-box glass-card">
+          <span class="countdown-number" id="cd-hours">00</span>
+          <span class="countdown-label">Hours</span>
+        </div>
+        <div class="countdown-box glass-card">
+          <span class="countdown-number" id="cd-minutes">00</span>
+          <span class="countdown-label">Minutes</span>
+        </div>
+        <div class="countdown-box glass-card">
+          <span class="countdown-number" id="cd-seconds">00</span>
+          <span class="countdown-label">Seconds</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Proposal / Special Question Section Slide -->
+    <section class="proposal-section glass-card deck-slide" id="deck-proposal">
+      <h2 class="proposal-title">Will You Be Mine Forever?</h2>
+      <p class="proposal-sub">Choose with your heart...</p>
+
+      <div class="proposal-btn-group">
+        <span class="no-message-toast" id="no-toast">Are you sure? 🥺</span>
+        <a href="celebration.html" class="btn-yes interactive" id="btn-yes" onclick="window.location.href='celebration.html';" style="text-decoration: none;">
+          <i class="fas fa-heart"></i> YES! Forever & Always!
+        </a>
+        <button class="btn-no interactive" id="btn-no">
+          No 🙈
+        </button>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Lightbox Modal -->
+  <div id="lightbox-modal" onclick="if(event.target===this) this.classList.remove('active')">
+    <div class="lightbox-content">
+      <button class="lightbox-close" id="lightbox-close" onclick="document.getElementById('lightbox-modal').classList.remove('active')">&times;</button>
+      <div class="lightbox-img-wrapper">
+        <img id="lightbox-img" src="" alt="Romantic Memory">
+      </div>
+      <div class="lightbox-caption" id="lightbox-title">A Beautiful Memory</div>
+      <div class="lightbox-subtext" id="lightbox-sub">Every second with you is a memory I treasure forever.</div>
+    </div>
+  </div>
+
+  <!-- Celebration Page Overlay -->
+  <div id="celebration-modal">
+    <div class="celebration-content">
+      <div class="celebration-badge">✨ FOREVER & ALWAYS SEALED ✨</div>
+      <h1 class="celebration-title">You Made Me the Happiest Person! 🎉💖</h1>
+      
+      <!-- Interactive Love Certificate -->
+      <div class="love-certificate glass-card shimmer-card">
+        <div class="cert-header">
+          <i class="fas fa-crown cert-crown"></i>
+          <h2>Certificate of Eternal Love</h2>
+        </div>
+        <p class="cert-body">
+          This certifies that <strong>My Heart</strong> belongs to you forever & always. Every second, every breath, and every beat of my heart will cherish, protect, and love you for all eternity.
+        </p>
+        <div class="cert-seal">
+          <i class="fas fa-heart"></i>
+          <span>SEALED WITH ETERNAL LOVE</span>
+        </div>
+      </div>
+
+      <!-- Interactive Love Letter Envelope -->
+      <div class="love-letter-box glass-card interactive" id="love-letter-btn">
+        <div class="envelope-icon"><i class="fas fa-envelope-open-text"></i></div>
+        <h3>Tap to Open My Love Letter 💌</h3>
+        <div class="letter-content" id="letter-content">
+          <p>"My dearest love, choosing you is the easiest decision I have ever made. You are my sunshine in the quiet mornings, my cozy comfort in the rain, and my favorite part of every single day. I promise to hold your hand through every adventure and love you more with every passing second." 🌹✨</p>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="celebration-actions">
+        <button class="btn-primary interactive" id="fireworks-burst-btn">
+          <i class="fas fa-sparkles"></i> Launch Love Fireworks! 🎆
+        </button>
+        <button class="btn-secondary interactive" id="close-celebration-btn">
+          <i class="fas fa-undo"></i> Replay Our Story 🌸
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Animated Music Player Widget -->
+  <div class="music-player-widget">
+    <div class="vinyl-disc" id="vinyl-disc">
+      <div class="vinyl-center"></div>
+    </div>
+    <div class="track-info">
+      <span class="track-title" id="music-track-title">Option 1: Romantic Melody 💖</span>
+      <span class="track-sub">Instrumental Serenade</span>
+    </div>
+    <button class="player-btn" id="vol-down-btn" title="Volume Down (-)">
+      <i class="fas fa-minus"></i>
+    </button>
+    <button class="player-btn" id="vol-up-btn" title="Volume Up (+)">
+      <i class="fas fa-plus"></i>
+    </button>
+    <button class="player-btn" id="quick-track-toggle" title="Switch Track (Option 1 ⇄ 5)">
+      <i class="fas fa-step-forward"></i>
+    </button>
+    <button class="player-btn" id="music-play-btn" title="Play/Pause">
+      <i class="fas fa-play" id="play-pause-icon"></i>
+    </button>
+    <button class="player-btn" id="music-mute-btn" title="Mute/Unmute">
+      <i class="fas fa-volume-up" id="mute-icon"></i>
+    </button>
+    <button class="player-btn" id="music-toggle-panel" title="Audio Settings">
+      <i class="fas fa-sliders-h"></i>
+    </button>
+
+    <!-- Expanded Music Controls Menu -->
+    <div class="music-controls-panel" id="music-controls-panel">
+      <div class="volume-row">
+        <i class="fas fa-volume-down"></i>
+        <input type="range" class="volume-slider" id="volume-slider" min="0" max="1" step="0.05" value="0.6">
+        <i class="fas fa-volume-up"></i>
+      </div>
+      <select class="track-selector" id="track-select">
+        <option value="0">Option 1 (romantic_music_1.mp3)</option>
+        <option value="1">Option 2 (romantic_music_2.mp3)</option>
+        <option value="2">Option 3 (romantic_music_3.mp3)</option>
+        <option value="3">Option 4 (romantic_music_4.mp3)</option>
+        <option value="4">Option 5 (romantic_music_5.mp3)</option>
+        <option value="5">Soft Romantic Piano (Synth)</option>
+        <option value="6">Romantic Acoustic Strings (Synth)</option>
+        <option value="7">Midnight Lofi Serenade (Synth)</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- Embedded HTML5 Audio Elements for 100% Browser Compatibility -->
+  <audio id="custom-audio-0" src="assets/audio/romantic_music_1.mp3" loop preload="auto"></audio>
+  <audio id="custom-audio-1" src="assets/audio/romantic_music_2.mp3" loop preload="auto"></audio>
+  <audio id="custom-audio-2" src="assets/audio/romantic_music_3.mp3" loop preload="auto"></audio>
+  <audio id="custom-audio-3" src="assets/audio/romantic_music_4.mp3" loop preload="auto"></audio>
+  <audio id="custom-audio-4" src="assets/audio/romantic_music_5.mp3" loop preload="auto"></audio>
+
+  <!-- Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/bubbles.js"></script>
+  <script src="js/effects.js"></script>
+  <script src="js/countdown.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>

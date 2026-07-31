@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>She Said YES! 💖 | Our Eternal Story</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- Core CSS -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    body {
+      overflow-x: hidden;
+      background: #0b0314;
+      color: #fff;
+    }
+
+    /* Fullscreen Celebration Canvas */
+    #celebration-canvas {
+      position: fixed;
+      inset: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .celebration-wrapper {
+      position: relative;
+      z-index: 10;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 6rem;
+      text-align: center;
+    }
+
+    /* Grand Banner */
+    .grand-headline {
+      font-family: var(--font-serif);
+      font-size: 3.8rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #ffffff 0%, #ffe082 50%, #ff4b72 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+      text-shadow: 0 0 30px rgba(255, 75, 114, 0.4);
+      animation: pulseGlow 2.5s ease-in-out infinite alternate;
+    }
+
+    @keyframes pulseGlow {
+      0% { filter: drop-shadow(0 0 10px rgba(255, 75, 114, 0.3)); }
+      100% { filter: drop-shadow(0 0 25px rgba(255, 224, 130, 0.8)); }
+    }
+
+    .grand-sub {
+      font-family: var(--font-script);
+      font-size: 2.5rem;
+      color: var(--accent-gold);
+      margin-bottom: 3rem;
+      text-shadow: 0 0 15px var(--gold-glow);
+    }
+
+    /* 3D Love Certificate Card */
+    .cert-container {
+      background: radial-gradient(circle, rgba(38, 14, 56, 0.9) 0%, rgba(16, 6, 26, 0.95) 100%);
+      border: 2px solid rgba(255, 224, 130, 0.6);
+      border-radius: 36px;
+      padding: 3.5rem 2.5rem;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.7), 0 0 40px rgba(255, 75, 114, 0.25);
+      position: relative;
+      overflow: hidden;
+      margin-bottom: 3rem;
+      transform: perspective(1000px) rotateX(2deg);
+      transition: transform 0.5s ease;
+    }
+
+    .cert-container:hover {
+      transform: perspective(1000px) rotateX(0deg) scale(1.01);
+    }
+
+    .cert-seal-badge {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #ff4b72 0%, #ff758c 100%);
+      border: 3px solid #ffe082;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      box-shadow: 0 0 25px var(--rose-glow);
+      animation: floatBadge 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes floatBadge {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-8px); }
+    }
+
+    .cert-seal-badge i {
+      font-size: 1.8rem;
+      color: #fff;
+    }
+
+    .cert-text {
+      font-size: 1.15rem;
+      line-height: 1.8;
+      color: var(--text-muted);
+      max-width: 700px;
+      margin: 0 auto 2rem;
+    }
+
+    .cert-text strong {
+      color: #fff;
+      font-weight: 700;
+    }
+
+    .cert-signatures {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      margin-top: 2.5rem;
+      padding-top: 1.8rem;
+      border-top: 1px dashed rgba(255, 224, 130, 0.3);
+      flex-wrap: wrap;
+      gap: 1.5rem;
+    }
+
+    .sig-block {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sig-name {
+      font-family: var(--font-script);
+      font-size: 2rem;
+      color: var(--secondary-pink);
+    }
+
+    .sig-title {
+      font-size: 0.8rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+    }
+
+    /* Floating Memories Carousel */
+    .memories-carousel {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+
+    .memory-polaroid {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid var(--glass-border);
+      border-radius: 20px;
+      padding: 0.8rem;
+      backdrop-filter: blur(16px);
+      transition: all 0.4s ease;
+      cursor: pointer;
+    }
+
+    .memory-polaroid:hover {
+      transform: translateY(-8px) rotate(2deg) scale(1.03);
+      box-shadow: 0 15px 35px var(--rose-glow);
+    }
+
+    .memory-polaroid img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-bottom: 0.8rem;
+    }
+
+    .memory-polaroid p {
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      color: #fff;
+    }
+
+    /* Action Toolbar */
+    .celebration-toolbar {
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+    }
+
+    @media (max-width: 768px) {
+      .grand-headline { font-size: 2.4rem; }
+      .grand-sub { font-size: 1.8rem; }
+      .cert-container { padding: 2rem 1.2rem; }
+      .cert-text { font-size: 0.95rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fullscreen Celebration FX Canvas -->
+  <canvas id="celebration-canvas"></canvas>
+
+  <!-- Top Control Bar -->
+  <div class="top-controls">
+    <a href="index.html?stopMusic=true" class="icon-btn interactive return-home-link" title="Return Home">
+      <i class="fas fa-home"></i>
+    </a>
+  </div>
+
+  <div class="celebration-wrapper">
+    
+    <!-- Grand Entrance Headline -->
+    <div class="grand-sub">My Heart Belongs To You...</div>
+    <h1 class="grand-headline">SHE SAID YES! 🎉💖</h1>
+
+    <!-- 3D Love Certificate -->
+    <div class="cert-container shimmer-card">
+      <div class="cert-seal-badge">
+        <i class="fas fa-heart"></i>
+      </div>
+      <h2 style="font-family: var(--font-serif); font-size: 2.2rem; color: #fff; margin-bottom: 1rem;">
+        Certificate of Eternal Love & Devotion
+      </h2>
+      <p class="cert-text">
+        Let it be known for all eternity that on this magical day, <strong>Our Hearts Were Bound Forever</strong>. Every sunrise, every sunset, every laugh, and every quiet moment from this day forward belongs to our beautiful journey together.
+      </p>
+
+      <div class="cert-signatures">
+        <div class="sig-block">
+          <span class="sig-name">My Forever Love 💖</span>
+          <span class="sig-title">Yours Always</span>
+        </div>
+        <div style="font-size: 1.8rem; color: var(--accent-gold);">✨ 💍 ✨</div>
+        <div class="sig-block">
+          <span class="sig-name">My Soulmate 🌹</span>
+          <span class="sig-title">My Heart & Soul</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Floating Memories Polaroid Cards -->
+    <h2 style="font-family: var(--font-serif); font-size: 2rem; color: #fff; margin-bottom: 1.5rem;">
+      Our Precious Moments 📸✨
+    </h2>
+
+    <div class="memories-carousel">
+      <div class="memory-polaroid">
+        <img src="assets/images/album_photos/album1.jpeg" alt="Memory 1">
+        <p>Starlight Magic ✨</p>
+      </div>
+      <div class="memory-polaroid">
+        <img src="assets/images/album_photos/album2.jpeg" alt="Memory 2">
+        <p>Golden Hour Laughter 🌅</p>
+      </div>
+      <div class="memory-polaroid">
+        <img src="assets/images/album_photos/album3.jpeg" alt="Memory 3">
+        <p>Blossom Strolls 🌸</p>
+      </div>
+      <div class="memory-polaroid">
+        <img src="assets/images/album_photos/album4.jpeg" alt="Memory 4">
+        <p>Infinite Stars 🌌</p>
+      </div>
+      <div class="memory-polaroid">
+        <img src="assets/images/album_photos/album5.jpeg" alt="Memory 5">
+        <p>Forever Devotion 🌹</p>
+      </div>
+    </div>
+
+    <!-- Action Toolbar -->
+    <div class="celebration-toolbar">
+      <button class="btn-primary interactive" id="launch-fireworks-btn">
+        <i class="fas fa-sparkles"></i> Launch Fireworks! 🎆
+      </button>
+      <a href="index.html?stopMusic=true" class="btn-primary interactive return-home-link" style="background: rgba(255,255,255,0.12); border: 1px solid var(--glass-border);">
+        <i class="fas fa-undo"></i> Replay Our Story 🌸
+      </a>
+    </div>
+
+  </div>
+
+  <!-- Music Engine -->
+  <audio id="celebration-audio" src="assets/audio/romantic_music_1.mp3" loop autoplay></audio>
+
+  <script>
+    // Celebration Canvas Fireworks & Floating Hearts Engine
+    const canvas = document.getElementById('celebration-canvas');
+    const ctx = canvas.getContext('2d');
+
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const particles = [];
+    const colors = ['#ff4b72', '#ff758c', '#ffe082', '#ffffff', '#ff8fa3'];
+
+    class Particle {
+      constructor(x, y, isHeart = false) {
+        this.x = x;
+        this.y = y;
+        this.isHeart = isHeart;
+        this.radius = isHeart ? Math.random() * 12 + 8 : Math.random() * 4 + 2;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+        
+        const angle = Math.random() * Math.PI * 2;
+        const speed = isHeart ? Math.random() * 2 + 1 : Math.random() * 6 + 2;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed - (isHeart ? 1.5 : 0);
+        
+        this.alpha = 1;
+        this.decay = Math.random() * 0.015 + 0.008;
+      }
+
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= this.decay;
+      }
+
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = Math.max(0, this.alpha);
+        ctx.fillStyle = this.color;
+        
+        if (this.isHeart) {
+          ctx.font = `${this.radius * 1.8}px sans-serif`;
+          ctx.fillText('💖', this.x, this.y);
+        } else {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.restore();
+      }
+    }
+
+    function spawnBurst(x, y) {
+      for (let i = 0; i < 30; i++) {
+        particles.push(new Particle(x, y, Math.random() > 0.6));
+      }
+    }
+
+    // Auto-launch continuous fireworks
+    setInterval(() => {
+      spawnBurst(Math.random() * width, Math.random() * (height * 0.7));
+    }, 600);
+
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].alpha <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Click anywhere to burst fireworks
+    window.addEventListener('click', (e) => {
+      spawnBurst(e.clientX, e.clientY);
+    });
+
+    document.getElementById('launch-fireworks-btn').addEventListener('click', (e) => {
+      e.stopPropagation();
+      for (let i = 0; i < 5; i++) {
+        setTimeout(() => {
+          spawnBurst(Math.random() * width, Math.random() * (height * 0.7));
+        }, i * 150);
+      }
+    });
+
+    // Stop music & set flag when returning home
+    function handleReturnHome(e) {
+      if (e && e.preventDefault) e.preventDefault();
+      stopCelebrationMedia();
+      sessionStorage.setItem('stopMusicOnReturn', 'true');
+      window.location.href = 'index.html?stopMusic=true';
+    }
+
+    document.querySelectorAll('.return-home-link').forEach((link) => {
+      link.addEventListener('click', handleReturnHome);
+    });
+
+    // Stop all audio/video media on page leave, unload, or tab switch
+    function stopCelebrationMedia() {
+      const audio = document.getElementById('celebration-audio');
+      if (audio) {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+      document.querySelectorAll('audio, video').forEach((m) => {
+        try {
+          m.pause();
+          m.currentTime = 0;
+        } catch (err) {}
+      });
+    }
+
+    window.addEventListener('pagehide', stopCelebrationMedia);
+    window.addEventListener('beforeunload', stopCelebrationMedia);
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) stopCelebrationMedia();
+    });
+
+    // Try playing audio
+    const audio = document.getElementById('celebration-audio');
+    if (audio) {
+      audio.volume = 0.7;
+      document.body.addEventListener('click', () => {
+        audio.play().catch(() => {});
+      }, { once: true });
+    }
+  </script>
+</body>
+</html>
