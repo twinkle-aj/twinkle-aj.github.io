@@ -107,6 +107,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  // Global Chapter Navigation Buttons (data-slide-nav)
+  document.addEventListener('click', (e) => {
+    const navBtn = e.target.closest('[data-slide-nav]');
+    if (navBtn) {
+      e.preventDefault();
+      const targetId = navBtn.getAttribute('data-slide-nav');
+      if (window.audioEngine) window.audioEngine.play();
+      switchDeckSlide(targetId);
+    }
+  });
+
   const shuffleBtn = document.getElementById('shuffle-bubbles-btn');
   if (shuffleBtn) {
     shuffleBtn.addEventListener('click', () => {
