@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    if (sectionTitle) sectionTitle.textContent = 'Countdown to My Special Day 🎂✨';
+    if (sectionTitle) sectionTitle.textContent = 'Countdown to Our Special Day 🎂✨';
     if (sectionSub) sectionSub.textContent = 'Counting down every second to the day my world became brighter — Your Birthday 💖';
 
     if (cdDays) cdDays.textContent = formatTwoDigits(days);
