@@ -93,11 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (err) {}
     }
 
-    // Smoothly align viewport so section title has clean breathing space below tabbar
+    // Smoothly align viewport only when tabbar is scrolled far out of view
     const navBar = document.querySelector('.compact-deck-nav');
     if (navBar) {
       const navRect = navBar.getBoundingClientRect();
-      if (navRect.top < 0 || navRect.top > 120) {
+      if (navRect.top < -25 || navRect.top > 250) {
         const targetScroll = Math.max(0, window.pageYOffset + navRect.top - 18);
         window.scrollTo({ top: targetScroll, behavior: 'smooth' });
       }
@@ -119,11 +119,14 @@ document.addEventListener('DOMContentLoaded', () => {
         el.classList.add('revealed');
       });
 
-      // Refresh photo bubble physics whenever switching to bubbles section
+      // Smoothly resume or init photo bubble physics without DOM tearing
       if (targetId === 'bubbles' && window.photoEngine) {
-        setTimeout(() => {
+        if (window.photoEngine.bubbles && window.photoEngine.bubbles.length > 0) {
+          window.photoEngine.updateBounds();
+          window.photoEngine.resume();
+        } else {
           window.photoEngine.init();
-        }, 60);
+        }
       } else if (window.photoEngine && typeof window.photoEngine.pause === 'function') {
         window.photoEngine.pause();
       }

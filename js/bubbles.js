@@ -18,45 +18,59 @@ class PhotoBubbleEngine {
     this.lastTime = 0;
     this.shuffling = false;
     this.listenersAttached = false;
+    this.width = 880;
+    this.height = 520;
+    this.cRect = null;
+    this.smoothDt = 1.0;
 
     this.init();
+  }
+
+  updateBounds() {
+    if (!this.container) return;
+    const rect = this.container.getBoundingClientRect();
+    const parentW = this.container.parentElement ? this.container.parentElement.clientWidth : 0;
+
+    this.width = rect.width > 200 ? rect.width : (parentW > 200 ? parentW : (window.innerWidth ? Math.min(window.innerWidth - 40, 960) : 880));
+    this.height = rect.height > 200 ? rect.height : 520;
+    this.cRect = rect;
   }
 
   init() {
     if (!this.container) return;
 
-    // Fail-safe width and height resolution handling hidden tabs
-    const rect = this.container.getBoundingClientRect();
-    const parentW = this.container.parentElement ? this.container.parentElement.clientWidth : 0;
-
-    const width = rect.width > 200 ? rect.width : (parentW > 200 ? parentW : (window.innerWidth ? Math.min(window.innerWidth - 40, 960) : 880));
-    const height = rect.height > 200 ? rect.height : 520;
+    this.updateBounds();
+    const width = this.width;
+    const height = this.height;
 
     // Track mouse & touch position relative to container
     if (!this.listenersAttached) {
+      window.addEventListener('resize', () => this.updateBounds(), { passive: true });
+      window.addEventListener('scroll', () => {
+        if (this.container) this.cRect = this.container.getBoundingClientRect();
+      }, { passive: true });
+
       window.addEventListener('mousemove', (e) => {
-        if (!this.container) return;
-        const cRect = this.container.getBoundingClientRect();
+        if (!this.container || !this.cRect) return;
+        const cRect = this.cRect;
         this.mouseX = e.clientX - cRect.left;
         this.mouseY = e.clientY - cRect.top;
         this.isMouseOver = (
           e.clientX >= cRect.left && e.clientX <= cRect.right &&
           e.clientY >= cRect.top && e.clientY <= cRect.bottom
         );
-      });
+      }, { passive: true });
 
       window.addEventListener('touchmove', (e) => {
-        if (!this.container) return;
-        if (e.touches.length > 0) {
-          const touch = e.touches[0];
-          const cRect = this.container.getBoundingClientRect();
-          this.mouseX = touch.clientX - cRect.left;
-          this.mouseY = touch.clientY - cRect.top;
-          this.isMouseOver = (
-            touch.clientX >= cRect.left && touch.clientX <= cRect.right &&
-            touch.clientY >= cRect.top && touch.clientY <= cRect.bottom
-          );
-        }
+        if (!this.container || !this.cRect || e.touches.length === 0) return;
+        const touch = e.touches[0];
+        const cRect = this.cRect;
+        this.mouseX = touch.clientX - cRect.left;
+        this.mouseY = touch.clientY - cRect.top;
+        this.isMouseOver = (
+          touch.clientX >= cRect.left && touch.clientX <= cRect.right &&
+          touch.clientY >= cRect.top && touch.clientY <= cRect.bottom
+        );
       }, { passive: true });
 
       window.addEventListener('touchend', () => {
@@ -218,13 +232,16 @@ class PhotoBubbleEngine {
     if (this.animId) cancelAnimationFrame(this.animId);
     this.running = true;
     this.lastTime = performance.now();
+    this.smoothDt = 1.0;
 
     const update = (timestamp) => {
       if (!this.running) return;
-      const dt = Math.min((timestamp - this.lastTime) / 16.67, 1.8) || 1.0;
+      const rawDt = (timestamp - this.lastTime) / 16.67;
       this.lastTime = timestamp;
+      const clampedDt = Math.max(0.65, Math.min(rawDt || 1.0, 1.35));
+      this.smoothDt = this.smoothDt * 0.75 + clampedDt * 0.25;
 
-      this.updatePhysics(dt, timestamp);
+      this.updatePhysics(this.smoothDt, timestamp);
       this.animId = requestAnimationFrame(update);
     };
 
@@ -241,6 +258,7 @@ class PhotoBubbleEngine {
 
   resume() {
     if (!this.running) {
+      this.updateBounds();
       this.startLoop();
     }
   }
@@ -248,11 +266,8 @@ class PhotoBubbleEngine {
   updatePhysics(dt, timestamp) {
     if (!this.container || this.bubbles.length === 0) return;
 
-    const containerW = this.container.clientWidth;
-    const containerH = this.container.clientHeight;
-
-    const width = containerW > 200 ? containerW : 880;
-    const height = containerH > 200 ? containerH : 520;
+    const width = this.width || 880;
+    const height = this.height || 520;
 
     // 1. Soft Inter-Bubble Fluffy Squash & Elastic Bouncy Effect
     const len = this.bubbles.length;
@@ -444,13 +459,6 @@ class PhotoBubbleEngine {
 
       // Hardware-accelerated 3D transform with directional squash and stretch
       b.element.style.transform = `translate3d(${renderX.toFixed(2)}px, ${renderY.toFixed(2)}px, 0) scale(${b.currentScale.toFixed(3)}) rotate(${ang}rad) scale(${sx}, ${sy}) rotate(${-ang}rad)`;
-
-      // Toggle soft glowing compression sheen when touching
-      if (Math.abs(b.squash) > 0.04) {
-        b.element.classList.add('bubble-bouncing');
-      } else {
-        b.element.classList.remove('bubble-bouncing');
-      }
     });
   }
 

@@ -832,6 +832,7 @@ body {
 }
 
 /* Dreamy Soft Fluffy Photo Bubble Aesthetics */
+/* Dreamy Soft Fluffy Photo Bubble Aesthetics (Optimized for 60/120 FPS Zero-Jerk Physics) */
 .bubble-item {
   position: absolute;
   top: 0;
@@ -839,21 +840,16 @@ body {
   border-radius: 50%;
   cursor: pointer;
   /* Soft translucent soap-bubble rim */
-  border: 1.5px solid rgba(255, 255, 255, 0.6);
+  border: 1.5px solid rgba(255, 255, 255, 0.7);
   /* Multi-layered fluffy soft glow with ethereal rose, violet, and golden tint */
   box-shadow:
-    0 12px 32px rgba(255, 75, 114, 0.32),
-    0 0 24px rgba(186, 147, 255, 0.28),
-    0 0 38px rgba(255, 224, 130, 0.22),
-    inset 0 0 20px rgba(255, 255, 255, 0.62),
-    inset 0 0 12px rgba(255, 117, 140, 0.38);
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(5px);
+    0 10px 28px rgba(255, 75, 114, 0.35),
+    0 0 22px rgba(186, 147, 255, 0.28),
+    0 0 32px rgba(255, 224, 130, 0.22),
+    inset 0 0 16px rgba(255, 255, 255, 0.65),
+    inset 0 0 10px rgba(255, 117, 140, 0.35);
   overflow: hidden;
   will-change: transform;
-  /* Soft fluid organic wobble and breathing glow */
-  animation: bubbleSoftWobble 6s ease-in-out infinite alternate, bubbleSoftGlow 4s ease-in-out infinite alternate;
-  transition: box-shadow 0.25s ease, border-color 0.25s ease;
 }
 
 /* Iridescent Soap Bubble Surface Reflection & Rim Sheen */
@@ -873,7 +869,6 @@ body {
     inset 0 2px 6px rgba(255, 255, 255, 0.8),
     inset 0 -3px 8px rgba(255, 117, 140, 0.35),
     inset -2px 0 6px rgba(120, 200, 255, 0.25);
-  mix-blend-mode: screen;
   pointer-events: none;
   z-index: 3;
 }
@@ -891,7 +886,6 @@ body {
   transform: rotate(-32deg);
   pointer-events: none;
   z-index: 4;
-  filter: blur(0.5px);
 }
 
 .bubble-item img {
@@ -901,11 +895,11 @@ body {
   border-radius: 50%;
   pointer-events: none;
   filter: brightness(1.02) contrast(1.02);
-  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .bubble-item:hover {
-  border-color: rgba(255, 224, 130, 0.85);
+  border-color: rgba(255, 224, 130, 0.9);
   box-shadow:
     0 14px 40px rgba(255, 75, 114, 0.5),
     0 0 32px rgba(186, 147, 255, 0.4),
@@ -916,54 +910,6 @@ body {
 
 .bubble-item:hover img {
   transform: scale(1.06);
-  filter: brightness(1.06) contrast(1.04);
-}
-
-/* Soft fluffy luminous compression highlight when bubbles touch & squish */
-.bubble-item.bubble-bouncing {
-  border-color: rgba(255, 255, 255, 0.95);
-  box-shadow:
-    0 16px 44px rgba(255, 75, 114, 0.55),
-    0 0 32px rgba(255, 224, 130, 0.48),
-    0 0 42px rgba(186, 147, 255, 0.42),
-    inset 0 0 26px rgba(255, 255, 255, 0.9),
-    inset 0 0 14px rgba(255, 117, 140, 0.58) !important;
-}
-
-@keyframes bubbleSoftWobble {
-  0% {
-    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
-  }
-  33% {
-    border-radius: 52% 48% 51% 49% / 49% 51% 48% 52%;
-  }
-  66% {
-    border-radius: 48% 52% 49% 51% / 52% 48% 53% 47%;
-  }
-  100% {
-    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
-  }
-}
-
-@keyframes bubbleSoftGlow {
-  0% {
-    box-shadow:
-      0 8px 22px rgba(255, 75, 114, 0.22),
-      0 0 16px rgba(186, 147, 255, 0.18),
-      0 0 28px rgba(255, 224, 130, 0.14),
-      inset 0 0 14px rgba(255, 255, 255, 0.5),
-      inset 0 0 7px rgba(255, 117, 140, 0.28);
-    border-color: rgba(255, 255, 255, 0.45);
-  }
-  100% {
-    box-shadow:
-      0 12px 34px rgba(255, 75, 114, 0.38),
-      0 0 26px rgba(186, 147, 255, 0.3),
-      0 0 42px rgba(255, 224, 130, 0.25),
-      inset 0 0 20px rgba(255, 255, 255, 0.68),
-      inset 0 0 11px rgba(255, 117, 140, 0.42);
-    border-color: rgba(255, 224, 130, 0.65);
-  }
 }
 
 /* Lightbox Modal */
@@ -2047,7 +1993,6 @@ body {
   transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
               box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
               border-color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform, box-shadow;
   border-radius: 24px;
 }
 
@@ -2056,6 +2001,7 @@ body {
 .album-card:hover,
 .timeline-card:hover,
 .countdown-box:hover {
+  will-change: transform;
   transform: translateY(-8px) scale(1.02);
   border-color: rgba(255, 224, 130, 0.9) !important;
   box-shadow:

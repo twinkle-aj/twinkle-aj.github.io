@@ -55,8 +55,27 @@ class RomanticEffectsEngine {
     this.createAmbientParticles();
     this.createMiniPhotoParticles();
 
+    // Visibility change listener to save CPU/battery
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        this.pause();
+      } else {
+        this.resume();
+      }
+    });
+
     // Start 60 FPS animation loop
     this.startLoop();
+  }
+
+  pause() {
+    this.running = false;
+  }
+
+  resume() {
+    if (!this.running) {
+      this.startLoop();
+    }
   }
 
   resizeCanvases() {
@@ -206,12 +225,14 @@ class RomanticEffectsEngine {
   }
 
   startLoop() {
+    this.running = true;
     const render = () => {
+      if (!this.running) return;
       this.renderAmbient();
       this.renderTrail();
       requestAnimationFrame(render);
     };
-    render();
+    requestAnimationFrame(render);
   }
 
   renderAmbient() {
@@ -286,8 +307,6 @@ class RomanticEffectsEngine {
         this.ambientCtx.rotate(p.rotation);
 
         // Glowing white/rose gold border
-        this.ambientCtx.shadowColor = 'rgba(255, 117, 140, 0.75)';
-        this.ambientCtx.shadowBlur = 15;
         this.ambientCtx.fillStyle = 'rgba(255, 255, 255, 0.95)';
         this.ambientCtx.beginPath();
         this.ambientCtx.arc(0, 0, p.size / 2 + 3, 0, Math.PI * 2);
@@ -341,8 +360,6 @@ class RomanticEffectsEngine {
         this.trailCtx.translate(p.x, p.y);
         this.trailCtx.globalAlpha = p.opacity;
 
-        this.trailCtx.shadowColor = 'rgba(255, 117, 140, 0.8)';
-        this.trailCtx.shadowBlur = 10;
         this.trailCtx.fillStyle = 'rgba(255, 255, 255, 0.9)';
         this.trailCtx.beginPath();
         this.trailCtx.arc(0, 0, p.size / 2 + 2, 0, Math.PI * 2);
