@@ -109,8 +109,38 @@ body {
   100% { transform: scale(1.15); opacity: 1; }
 }
 
+/* Romantic Couple Hashtag */
+.landing-hashtag {
+  font-family: var(--font-serif);
+  font-size: 1.18rem;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  background: linear-gradient(135deg, #ffe082 0%, #ff758c 50%, #ffffff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 15px rgba(255, 75, 114, 0.45);
+  margin-top: 0.9rem;
+  margin-bottom: -0.3rem;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  animation: hashtagGlow 2.5s ease-in-out infinite alternate;
+}
+
+@keyframes hashtagGlow {
+  0% {
+    filter: drop-shadow(0 0 8px rgba(255, 75, 114, 0.4));
+    transform: scale(0.98);
+  }
+  100% {
+    filter: drop-shadow(0 0 18px rgba(255, 224, 130, 0.8));
+    transform: scale(1.02);
+  }
+}
+
 .loading-title {
-  margin-top: 1.2rem;
+  margin-top: 1.0rem;
   font-family: var(--font-serif);
   font-size: 1.8rem;
   color: var(--secondary-pink);
@@ -173,18 +203,30 @@ body {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.45rem;
+  gap: 0.4rem;
   background: linear-gradient(135deg, rgba(255, 75, 114, 0.28) 0%, rgba(255, 224, 130, 0.22) 100%);
   border: 1.5px solid rgba(255, 224, 130, 0.7);
-  padding: 0.45rem 1.25rem;
+  padding: 0.42rem clamp(0.7rem, 2vw, 1.25rem);
   border-radius: 50px;
   box-shadow: 0 0 20px rgba(255, 75, 114, 0.35), 0 0 12px rgba(255, 224, 130, 0.35);
   animation: badgePulse 2.6s ease-in-out infinite alternate;
-  font-size: 1.08rem;
+  font-size: clamp(0.78rem, 2.5vw, 1.05rem);
   color: #fff;
   letter-spacing: 0.2px;
   position: relative;
   overflow: hidden;
+  white-space: nowrap !important;
+  flex-wrap: nowrap !important;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.disclaimer-pill-text {
+  white-space: nowrap !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.25rem;
 }
 
 /* Sparkle line light sweep running over the yellow border */
@@ -410,6 +452,62 @@ body {
   color: #ff8fa3;
   font-weight: 700;
   text-shadow: 0 0 10px rgba(255, 143, 163, 0.5);
+}
+
+/* Colorful Shimmering & Pulsing Animation for Her (Boss) */
+.highlight-boss {
+  display: inline-block;
+  font-weight: 800;
+  background: linear-gradient(
+    135deg,
+    #ffe082 0%,
+    #ff6b8b 25%,
+    #ff2a85 50%,
+    #d946ef 75%,
+    #ffe082 100%
+  );
+  background-size: 250% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: #ff6b8b;
+  animation: bossShimmerFlow 3.2s linear infinite, bossHeartPulse 2.4s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(255, 75, 114, 0.6));
+  padding: 0 0.15rem;
+  letter-spacing: 0.3px;
+  vertical-align: baseline;
+  transform-origin: center center;
+  transition: transform 0.25s ease, filter 0.25s ease;
+  will-change: transform, filter, background-position;
+}
+
+.highlight-boss:hover {
+  transform: scale(1.08);
+  filter: drop-shadow(0 0 12px rgba(255, 107, 139, 0.9)) drop-shadow(0 0 20px rgba(255, 224, 130, 0.8));
+}
+
+@keyframes bossShimmerFlow {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 250% 50%;
+  }
+}
+
+@keyframes bossHeartPulse {
+  0% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 4px rgba(255, 75, 114, 0.45));
+  }
+  50% {
+    transform: scale(1.04);
+    filter: drop-shadow(0 0 10px rgba(255, 107, 139, 0.85)) drop-shadow(0 0 18px rgba(255, 224, 130, 0.7));
+  }
+  100% {
+    transform: scale(1);
+    filter: drop-shadow(0 0 4px rgba(255, 75, 114, 0.45));
+  }
 }
 
 .callout-heart {
@@ -2263,6 +2361,12 @@ body {
     height: 60px !important;
   }
 
+  .landing-hashtag {
+    font-size: 1.0rem !important;
+    margin-top: 0.6rem !important;
+    margin-bottom: -0.2rem !important;
+  }
+
   .loading-title {
     font-size: 1.35rem !important;
     margin-top: 0.8rem !important;
@@ -2281,11 +2385,18 @@ body {
   }
 
   .disclaimer-pill-badge {
-    font-size: 0.92rem !important;
-    padding: 0.4rem 0.95rem !important;
-    gap: 0.35rem !important;
-    flex-wrap: wrap !important;
-    line-height: 1.35 !important;
+    font-size: clamp(0.68rem, 3.1vw, 0.88rem) !important;
+    padding: 0.32rem clamp(0.45rem, 1.5vw, 0.75rem) !important;
+    gap: 0.25rem !important;
+    flex-wrap: nowrap !important;
+    white-space: nowrap !important;
+    max-width: 100% !important;
+    box-sizing: border-box !important;
+    line-height: 1.3 !important;
+  }
+
+  .disclaimer-pill-text {
+    white-space: nowrap !important;
   }
 
   .disclaimer-text {
@@ -2328,3 +2439,15 @@ body {
     margin-top: 0.8rem !important;
   }
 }
+
+@media (max-width: 380px) {
+  .disclaimer-pill-badge {
+    font-size: 0.72rem !important;
+    padding: 0.28rem 0.42rem !important;
+    gap: 0.18rem !important;
+  }
+  .disclaimer-pill-badge .badge-sparkle {
+    font-size: 0.72rem !important;
+  }
+}
+
