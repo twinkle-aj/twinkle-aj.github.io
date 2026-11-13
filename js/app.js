@@ -46,10 +46,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
       if (loadingScreen) {
         loadingScreen.style.opacity = '0';
+        loadingScreen.style.transform = 'scale(1.04)';
+        loadingScreen.style.filter = 'blur(8px)';
         loadingScreen.style.pointerEvents = 'none';
         setTimeout(() => {
           loadingScreen.style.visibility = 'hidden';
-        }, 1000);
+        }, 850);
       }
     });
   }
@@ -68,14 +70,18 @@ document.addEventListener('DOMContentLoaded', () => {
   const deckTabBtns = document.querySelectorAll('.deck-tab-btn');
   const deckSlides = document.querySelectorAll('.deck-slide');
 
+  let slideSwitchTimer = null;
+
   function switchDeckSlide(targetId) {
-    deckSlides.forEach((slide) => slide.classList.remove('active'));
+    const targetSlide = document.getElementById(`deck-${targetId}`);
+    if (!targetSlide) return;
+
+    const currentSlide = document.querySelector('.deck-slide.active');
+    if (currentSlide === targetSlide && !currentSlide.classList.contains('leaving')) return;
+
+    // Immediately update tab bar state
     deckTabBtns.forEach((btn) => btn.classList.remove('active'));
-
-    const activeSlide = document.getElementById(`deck-${targetId}`);
     const activeBtn = document.querySelector(`.deck-tab-btn[data-deck-target="${targetId}"]`);
-
-    if (activeSlide) activeSlide.classList.add('active');
     if (activeBtn) {
       activeBtn.classList.add('active');
       try {
@@ -83,20 +89,45 @@ document.addEventListener('DOMContentLoaded', () => {
       } catch (err) {}
     }
 
-    // Refresh photo bubble physics whenever switching to bubbles section
-    if (targetId === 'bubbles' && window.photoEngine) {
-      setTimeout(() => {
-        window.photoEngine.init();
-      }, 60);
-    }
-
     // Smoothly align viewport so section title has clean breathing space below tabbar
     const navBar = document.querySelector('.compact-deck-nav');
     if (navBar) {
       const navRect = navBar.getBoundingClientRect();
       if (navRect.top < 0 || navRect.top > 120) {
-        navBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const targetScroll = Math.max(0, window.pageYOffset + navRect.top - 18);
+        window.scrollTo({ top: targetScroll, behavior: 'smooth' });
       }
+    }
+
+    if (slideSwitchTimer) {
+      clearTimeout(slideSwitchTimer);
+      slideSwitchTimer = null;
+    }
+
+    const activateTarget = () => {
+      deckSlides.forEach((slide) => {
+        slide.classList.remove('active', 'leaving');
+      });
+      targetSlide.classList.add('active');
+
+      // Guarantee smooth reveal for cards inside the newly active section
+      targetSlide.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+        el.classList.add('revealed');
+      });
+
+      // Refresh photo bubble physics whenever switching to bubbles section
+      if (targetId === 'bubbles' && window.photoEngine) {
+        setTimeout(() => {
+          window.photoEngine.init();
+        }, 60);
+      }
+    };
+
+    if (currentSlide && currentSlide !== targetSlide) {
+      currentSlide.classList.add('leaving');
+      slideSwitchTimer = setTimeout(activateTarget, 190);
+    } else {
+      activateTarget();
     }
   }
 
@@ -495,7 +526,7 @@ document.addEventListener('DOMContentLoaded', () => {
   revealElements.forEach((el) => observer.observe(el));
 
   // 2. Interactive 3D Card Tilt & Shimmer Effect on Mouse Move
-  const tiltCards = document.querySelectorAll('.timeline-card, .album-card, .countdown-box');
+  const tiltCards = document.querySelectorAll('.timeline-card, .album-card, .countdown-box, .childhood-card');
   tiltCards.forEach((card) => {
     card.classList.add('shimmer-card');
     card.addEventListener('mousemove', (e) => {
