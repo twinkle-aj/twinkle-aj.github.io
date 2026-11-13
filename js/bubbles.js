@@ -1,7 +1,7 @@
 /**
  * Dreamy Soft Photo Bubble Physics Engine
  * Delivers real soap bubble soft squash & stretch deformation,
- * gentle elastic bouncy physics, harmonic fluid drift, and iridescent aesthetics.
+ * fluffy elastic bouncy physics, harmonic fluid drift, and iridescent aesthetics.
  */
 
 class PhotoBubbleEngine {
@@ -131,9 +131,9 @@ class PhotoBubbleEngine {
       bubbleElem.appendChild(imgElem);
       this.container.appendChild(bubbleElem);
 
-      // Gentle initial velocity (0.22 - 0.45 px/frame for peaceful float)
+      // Lively buoyant initial velocity (0.55 - 0.90 px/frame for joyful floating)
       const angle = Math.random() * Math.PI * 2;
-      const initialSpeed = Math.random() * 0.22 + 0.2;
+      const initialSpeed = Math.random() * 0.35 + 0.55;
 
       const bubble = {
         element: bubbleElem,
@@ -162,9 +162,10 @@ class PhotoBubbleEngine {
         isHovered: false
       };
 
-      // Hover interaction with JS interpolation (avoids CSS/JS transform conflict)
+      // Hover interaction with cute fluffy squish reaction
       bubbleElem.addEventListener('mouseenter', () => {
         bubble.isHovered = true;
+        bubble.squashVel = -0.10; // Cute gentle squish when cursor touches bubble!
         bubbleElem.style.zIndex = '35';
       });
       bubbleElem.addEventListener('mouseleave', () => {
@@ -172,11 +173,11 @@ class PhotoBubbleEngine {
         bubbleElem.style.zIndex = '10';
       });
 
-      // Tap / Click Handler to open Lightbox with soft squish reaction
+      // Tap / Click Handler to open Lightbox with fluffy squish reaction
       bubbleElem.addEventListener('click', (e) => {
         e.stopPropagation();
-        // Soft squish wobble impulse on tap
-        bubble.squashVel = -0.14;
+        // Playful fluffy squish wobble impulse on tap
+        bubble.squashVel = -0.18;
         bubble.squashAngle = Math.random() * Math.PI * 2;
         this.openLightbox(photo);
         if (window.effectsEngine) {
@@ -243,7 +244,7 @@ class PhotoBubbleEngine {
     const width = containerW > 200 ? containerW : 880;
     const height = containerH > 200 ? containerH : 520;
 
-    // 1. Soft Inter-Bubble Real Bubble Squash & Elastic Bouncy Effect
+    // 1. Soft Inter-Bubble Fluffy Squash & Elastic Bouncy Effect
     const len = this.bubbles.length;
     for (let i = 0; i < len; i++) {
       for (let j = i + 1; j < len; j++) {
@@ -253,7 +254,8 @@ class PhotoBubbleEngine {
         const dx = b2.x - b1.x;
         const dy = b2.y - b1.y;
         const dist = Math.hypot(dx, dy) || 0.001;
-        const minDist = b1.radius + b2.radius + 10;
+        // Slightly wider touch cushion distance so soft glowing halos interact
+        const minDist = b1.radius + b2.radius + 14;
 
         if (dist < minDist) {
           const overlap = minDist - dist;
@@ -265,9 +267,9 @@ class PhotoBubbleEngine {
           const relVy = b1.vy - b2.vy;
           const approachVel = relVx * nx + relVy * ny;
 
-          // Slightly bouncy repulsion impulse (soft, buoyant, not plastic)
-          const springPush = (overlap / minDist) * 0.065 * dt;
-          const bounceImpulse = approachVel > 0 ? approachVel * 0.32 : 0;
+          // Fluffy elastic bouncy repulsion impulse (lively, buoyant, not plastic)
+          const springPush = (overlap / minDist) * 0.12 * dt;
+          const bounceImpulse = approachVel > 0 ? approachVel * 0.52 : 0;
           const totalPush = springPush + bounceImpulse;
 
           b1.vx -= nx * totalPush;
@@ -276,16 +278,16 @@ class PhotoBubbleEngine {
           b2.vy += ny * totalPush;
 
           // Soft position relaxation cushion
-          const relax = overlap * 0.05 * dt;
+          const relax = overlap * 0.065 * dt;
           b1.x -= nx * relax;
           b1.y -= ny * relax;
           b2.x += nx * relax;
           b2.y += ny * relax;
 
-          // REAL BUBBLE SQUASH & STRETCH:
-          // Deforms softly inward along the line of contact (like jelly/soap bubble)
-          const contactIntensity = Math.min(0.20, (overlap / minDist) * 0.26 + (approachVel > 0 ? approachVel * 0.18 : 0));
-          const impulse = contactIntensity * 0.42 * dt;
+          // REAL FLUFFY BUBBLE SQUASH & STRETCH:
+          // Deforms softly inward along contact line (like fluffy jelly bubble)
+          const contactIntensity = Math.min(0.24, (overlap / minDist) * 0.32 + (approachVel > 0 ? approachVel * 0.22 : 0));
+          const impulse = contactIntensity * 0.58 * dt;
 
           b1.squashVel -= impulse;
           b2.squashVel -= impulse;
@@ -298,12 +300,12 @@ class PhotoBubbleEngine {
           let d1 = angle1 - b1.squashAngle;
           while (d1 < -Math.PI) d1 += Math.PI * 2;
           while (d1 > Math.PI) d1 -= Math.PI * 2;
-          b1.squashAngle += d1 * (0.35 * dt);
+          b1.squashAngle += d1 * (0.38 * dt);
 
           let d2 = angle2 - b2.squashAngle;
           while (d2 < -Math.PI) d2 += Math.PI * 2;
           while (d2 > Math.PI) d2 -= Math.PI * 2;
-          b2.squashAngle += d2 * (0.35 * dt);
+          b2.squashAngle += d2 * (0.38 * dt);
         }
       }
     }
@@ -312,7 +314,7 @@ class PhotoBubbleEngine {
     const now = timestamp || performance.now();
 
     this.bubbles.forEach((b) => {
-      // Soft boundary steering + soft squish against container borders
+      // Soft boundary steering + fluffy bounce against container borders
       const padLeft = b.radius + 16;
       const padRight = width - b.radius - 16;
       const padTop = b.radius + 16;
@@ -320,57 +322,57 @@ class PhotoBubbleEngine {
 
       if (b.x < padLeft) {
         const overlap = padLeft - b.x;
-        b.vx += overlap * 0.004 * dt;
-        b.squashVel -= (overlap / padLeft) * 0.035 * dt;
+        b.vx += overlap * 0.007 * dt;
+        b.squashVel -= (overlap / padLeft) * 0.05 * dt;
         b.squashAngle = 0;
         if (b.x < b.radius + 4) {
           b.x = b.radius + 4;
-          b.vx = Math.abs(b.vx) * 0.55;
+          b.vx = Math.abs(b.vx) * 0.72;
         }
       } else if (b.x > padRight) {
         const overlap = b.x - padRight;
-        b.vx -= overlap * 0.004 * dt;
-        b.squashVel -= (overlap / (width - padRight)) * 0.035 * dt;
+        b.vx -= overlap * 0.007 * dt;
+        b.squashVel -= (overlap / (width - padRight)) * 0.05 * dt;
         b.squashAngle = Math.PI;
         if (b.x > width - b.radius - 4) {
           b.x = width - b.radius - 4;
-          b.vx = -Math.abs(b.vx) * 0.55;
+          b.vx = -Math.abs(b.vx) * 0.72;
         }
       }
 
       if (b.y < padTop) {
         const overlap = padTop - b.y;
-        b.vy += overlap * 0.004 * dt;
-        b.squashVel -= (overlap / padTop) * 0.035 * dt;
+        b.vy += overlap * 0.007 * dt;
+        b.squashVel -= (overlap / padTop) * 0.05 * dt;
         b.squashAngle = Math.PI * 0.5;
         if (b.y < b.radius + 4) {
           b.y = b.radius + 4;
-          b.vy = Math.abs(b.vy) * 0.55;
+          b.vy = Math.abs(b.vy) * 0.72;
         }
       } else if (b.y > padBottom) {
         const overlap = b.y - padBottom;
-        b.vy -= overlap * 0.004 * dt;
-        b.squashVel -= (overlap / (height - padBottom)) * 0.035 * dt;
+        b.vy -= overlap * 0.007 * dt;
+        b.squashVel -= (overlap / (height - padBottom)) * 0.05 * dt;
         b.squashAngle = -Math.PI * 0.5;
         if (b.y > height - b.radius - 35) {
           b.y = height - b.radius - 35;
-          b.vy = -Math.abs(b.vy) * 0.55;
+          b.vy = -Math.abs(b.vy) * 0.72;
         }
       }
 
-      // Air resistance damping (prevents speed runaway)
-      b.vx *= Math.pow(0.993, dt);
-      b.vy *= Math.pow(0.993, dt);
+      // Air resistance damping (keeps lively momentum while preventing runaway)
+      b.vx *= Math.pow(0.995, dt);
+      b.vy *= Math.pow(0.995, dt);
 
-      // Maintain serene floating speed (0.22 - 0.65 px/frame)
+      // Lively buoyant floating speed (0.50 - 1.15 px/frame for active, dreamy float)
       const speed = Math.hypot(b.vx, b.vy);
-      const minSpeed = 0.22;
-      const maxSpeed = 0.65;
+      const minSpeed = 0.50;
+      const maxSpeed = 1.15;
 
       if (speed < minSpeed) {
         const dir = Math.atan2(b.vy, b.vx) || (Math.random() * Math.PI * 2);
-        b.vx += Math.cos(dir) * 0.015 * dt;
-        b.vy += Math.sin(dir) * 0.015 * dt;
+        b.vx += Math.cos(dir) * 0.028 * dt;
+        b.vy += Math.sin(dir) * 0.028 * dt;
       } else if (speed > maxSpeed) {
         const factor = maxSpeed / speed;
         b.vx *= factor;
@@ -381,16 +383,16 @@ class PhotoBubbleEngine {
       b.x += b.vx * dt;
       b.y += b.vy * dt;
 
-      // Damped harmonic spring for jelly bubble wobble recovery
-      const kSquash = 0.12;      // Spring stiffness (soft, elastic)
-      const dampingSquash = 0.84; // Underdamped jelly decay (gives 2-3 gentle wobbles)
+      // Damped harmonic spring for fluffy jelly bubble wobble recovery
+      const kSquash = 0.11;      // Spring stiffness (soft, elastic)
+      const dampingSquash = 0.87; // Fluffy underdamped jelly decay (gives 3 lively wobbles)
 
       const springAcc = -kSquash * b.squash;
       b.squashVel = (b.squashVel + springAcc * dt) * Math.pow(dampingSquash, dt);
       b.squash += b.squashVel * dt;
 
-      // Safe bounds on squash deformation (-0.22 to +0.16)
-      b.squash = Math.max(-0.22, Math.min(0.16, b.squash));
+      // Safe bounds on squash deformation (-0.24 to +0.18)
+      b.squash = Math.max(-0.24, Math.min(0.18, b.squash));
 
       // Mouse Proximity Soft Glide (Smooth Lerp Evade)
       let targetDx = 0;
@@ -399,21 +401,21 @@ class PhotoBubbleEngine {
         const mdx = b.x - this.mouseX;
         const mdy = b.y - this.mouseY;
         const mDist = Math.hypot(mdx, mdy);
-        if (mDist < 170 && mDist > 0.5) {
-          const norm = (170 - mDist) / 170;
-          const force = norm * norm * 22; // Quadratic smooth falloff
+        if (mDist < 180 && mDist > 0.5) {
+          const norm = (180 - mDist) / 180;
+          const force = norm * norm * 28; // Responsive smooth falloff
           targetDx = (mdx / mDist) * force;
           targetDy = (mdy / mDist) * force;
         }
       }
 
       // Lerp mouse offset (silky smooth ease)
-      b.currentOffsetX += (targetDx - b.currentOffsetX) * (0.07 * dt);
-      b.currentOffsetY += (targetDy - b.currentOffsetY) * (0.07 * dt);
+      b.currentOffsetX += (targetDx - b.currentOffsetX) * (0.08 * dt);
+      b.currentOffsetY += (targetDy - b.currentOffsetY) * (0.08 * dt);
 
       // Lerp hover scale
-      const targetScale = b.isHovered ? 1.13 : 1.0;
-      b.currentScale += (targetScale - b.currentScale) * (0.12 * dt);
+      const targetScale = b.isHovered ? 1.15 : 1.0;
+      b.currentScale += (targetScale - b.currentScale) * (0.14 * dt);
 
       // Natural harmonic wave oscillation (simulates air currents)
       const waveX = Math.sin(now * b.freqX + b.phaseX) * b.ampX;
