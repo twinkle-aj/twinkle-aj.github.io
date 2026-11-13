@@ -5,20 +5,24 @@
 document.addEventListener('DOMContentLoaded', () => {
   // Photos configuration for floating background bubbles (assets/images/bubble_photos/)
   const romanticPhotos = [
-    { src: 'assets/images/floating_photos/float1.jpeg', title: 'Floating Moment ✨', note: 'Holding your hand feels like finding home in a world of starlight.' },
-    { src: 'assets/images/floating_photos/float2.jpeg', title: 'Golden Sunset 🌅', note: 'Your smile lights up my world brighter than the golden hour.' },
-    { src: 'assets/images/floating_photos/float3.jpeg', title: 'Blossom Dream 🌸', note: 'Every path walked with you is filled with sweet magic and bliss.' },
-    { src: 'assets/images/floating_photos/float4.jpeg', title: 'Starry Embrace 🌌', note: 'Under the infinite stars, my heart will always choose you.' },
-    { src: 'assets/images/floating_photos/float5.jpeg', title: 'Pure Serenade 💕', note: 'In your laughter, I hear the sweetest melody ever written.' },
-    { src: 'assets/images/floating_photos/float6.jpeg', title: 'Sweet Magic 🌹', note: 'Every quiet second beside you is a treasure I keep in my soul.' },
-    { src: 'assets/images/floating_photos/float7.jpeg', title: 'Forever Us 💍✨', note: 'My favorite place in the entire universe is right next to you.' },
-    { src: 'assets/images/floating_photos/float8.jpeg', title: 'Moonlight Whisper 🌙', note: 'Whispering sweet dreams to the stars, knowing you are mine.' },
-    { src: 'assets/images/floating_photos/float9.jpeg', title: 'Radiant Smile 💖', note: 'Your happiness is the sunshine that brightens my darkest days.' },
-    { src: 'assets/images/floating_photos/float10.jpeg', title: 'Endless Joy 🥂', note: 'Celebrating every laugh and memory we build together.' },
-    { src: 'assets/images/floating_photos/float11.jpeg', title: 'Warm Hugs 🫂✨', note: 'Wrapped in your arms is where I am safest and happiest.' },
-    { src: 'assets/images/floating_photos/float12.jpeg', title: 'Starlight Romance 🌌', note: 'A love story written across infinite galaxies.' },
-    { src: 'assets/images/floating_photos/float13.jpeg', title: 'Precious Smile 🥰', note: 'Capturing the beauty of your soul in every picture.' },
-    { src: 'assets/images/floating_photos/float14.jpeg', title: 'Eternal Bond 💍🌹', note: 'Bound by heart and soul for all of time.' }
+    { src: 'assets/images/bubble_photos/bubble1.jpeg', title: 'Festive Radiance 🪔💖', note: 'Your smile lights up my entire world brighter than a thousand festive lamps.', position: 'center 18%' },
+    { src: 'assets/images/bubble_photos/bubble2.jpeg', title: 'Starlight Dream ✨', note: 'Holding starlight in your hands, but you are the brightest star in my sky.', position: 'center 24%' },
+    { src: 'assets/images/bubble_photos/bubble7.jpeg', title: 'Cute & Carefree 🥰', note: 'Every candid laugh and sweet smile of yours is my favorite memory.', position: 'center 25%' },
+    { src: 'assets/images/bubble_photos/bubble8.jpeg', title: 'Sweet Pout 💕', note: 'The cutest face in the universe belongs to my sweetheart.', position: 'center 35%' },
+    { src: 'assets/images/bubble_photos/bubble9.jpeg', title: 'Endless Joy 🌸', note: 'Pure joy and endless giggles whenever I am with you.', position: 'center 25%' },
+    { src: 'assets/images/bubble_photos/bubble3.jpeg', title: 'Sweet Dreams 🌙', note: 'Resting beside you in peace and sweet love.', position: 'center 25%' },
+    { src: 'assets/images/bubble_photos/bubble4.jpeg', title: 'Pure Serenade 💕', note: 'In your laughter, I hear the sweetest melody ever written.', position: 'center 25%' },
+    { src: 'assets/images/bubble_photos/bubble5.jpeg', title: 'Sweet Magic 🌹', note: 'Every quiet second beside you is a treasure I keep in my soul.', position: 'center 25%' },
+    { src: 'assets/images/bubble_photos/bubble6.jpeg', title: 'Radiant Smile 💖', note: 'Your happiness is the sunshine that brightens my darkest days.', position: 'center 25%' },
+    { src: 'assets/images/floating_photos/float1.jpeg', title: 'Floating Moment ✨', note: 'Holding your hand feels like finding home in a world of starlight.', position: 'center center' },
+    { src: 'assets/images/floating_photos/float2.jpeg', title: 'Golden Sunset 🌅', note: 'Your smile lights up my world brighter than the golden hour.', position: 'center center' },
+    { src: 'assets/images/floating_photos/float4.jpeg', title: 'Starry Embrace 🌌', note: 'Under the infinite stars, my heart will always choose you.', position: 'center center' },
+    { src: 'assets/images/floating_photos/float5.jpeg', title: 'Warm Hugs 🫂✨', note: 'Wrapped in your arms is where I am safest and happiest.', position: 'center center' },
+    { src: 'assets/images/floating_photos/float6.jpeg', title: 'Forever Us 💍✨', note: 'My favorite place in the entire universe is right next to you.', position: 'center center' },
+    { src: 'assets/images/floating_photos/float9.jpeg', title: 'Precious Smile 🥰', note: 'Capturing the beauty of your soul in every picture.', position: 'center center' },
+    { src: 'assets/images/floating_photos/float10.jpeg', title: 'Eternal Bond 💍🌹', note: 'Bound by heart and soul for all of time.', position: 'center center' },
+    { src: 'assets/images/floating_photos/float11.jpeg', title: 'Cherished Memories 💖', note: 'Every memory we create is a gift I will treasure forever.', position: 'center center' },
+    { src: 'assets/images/floating_photos/float12.jpeg', title: 'Starlight Romance 🌌', note: 'A love story written across infinite galaxies.', position: 'center center' }
   ];
 
   // Initialize Photo Bubbles globally

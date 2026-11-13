@@ -9,6 +9,7 @@ class PhotoBubbleEngine {
     this.container = document.getElementById(containerId);
     this.photos = photos;
     this.bubbles = [];
+    this.photoIndex = 0;
     this.mouseX = 0;
     this.mouseY = 0;
     this.isMouseOver = false;
@@ -82,7 +83,13 @@ class PhotoBubbleEngine {
     // Prevents cramped gridlock so bubbles have room to bounce & squish softly
     const isMobile = window.innerWidth < 768 || width < 768;
     const maxBubbles = isMobile ? (width < 450 ? 5 : 6) : (width < 1050 ? 8 : 9);
-    const displayPhotos = this.photos.slice(0, maxBubbles);
+
+    // Pick a rotating window of photos so EVERY photo in the collection is seen across shuffles
+    const displayPhotos = [];
+    const totalPhotos = this.photos.length;
+    for (let i = 0; i < maxBubbles; i++) {
+      displayPhotos.push(this.photos[(this.photoIndex + i) % totalPhotos]);
+    }
     const baseSize = isMobile ? 74 : 104;
 
     displayPhotos.forEach((photo) => {
@@ -118,6 +125,9 @@ class PhotoBubbleEngine {
       imgElem.src = photo.src;
       imgElem.alt = photo.title || 'Romantic Memory';
       imgElem.loading = 'eager';
+      if (photo.position) {
+        imgElem.style.objectPosition = photo.position;
+      }
 
       imgElem.onerror = () => {
         imgElem.style.display = 'none';
@@ -449,6 +459,11 @@ class PhotoBubbleEngine {
     if (this.shuffling) return;
     this.shuffling = true;
 
+    // Advance to next batch of photos so clicking shuffle ALWAYS reveals new photos!
+    const isMobile = window.innerWidth < 768;
+    const step = isMobile ? 5 : 8;
+    this.photoIndex = (this.photoIndex + step) % this.photos.length;
+
     // Fade out current bubbles softly
     this.bubbles.forEach((b) => {
       b.element.style.transition = 'opacity 0.25s ease, transform 0.25s cubic-bezier(0.4, 0, 0.2, 1)';
@@ -457,7 +472,6 @@ class PhotoBubbleEngine {
     });
 
     setTimeout(() => {
-      this.photos.sort(() => Math.random() - 0.5);
       this.init();
       // Bloom in
       this.bubbles.forEach((b, idx) => {
