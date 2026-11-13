@@ -919,6 +919,17 @@ body {
   filter: brightness(1.06) contrast(1.04);
 }
 
+/* Soft luminous compression highlight when bubbles touch & squish */
+.bubble-item.bubble-bouncing {
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow:
+    0 14px 38px rgba(255, 75, 114, 0.45),
+    0 0 28px rgba(255, 224, 130, 0.4),
+    0 0 35px rgba(186, 147, 255, 0.35),
+    inset 0 0 22px rgba(255, 255, 255, 0.8),
+    inset 0 0 12px rgba(255, 117, 140, 0.5) !important;
+}
+
 @keyframes bubbleSoftWobble {
   0% {
     border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
