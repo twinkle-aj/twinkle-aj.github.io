@@ -35,6 +35,7 @@
 
   <!-- Core CSS -->
   <link rel="stylesheet" href="css/style.css">
+  <script src="js/translations.js"></script>
 
   <style>
     body {
@@ -327,6 +328,11 @@
 
   <!-- Top Control Bar -->
   <div class="top-controls">
+    <div class="lang-switcher-pill" title="Choose Language / भाषा / ভাষা">
+      <button class="lang-pill-btn active interactive" data-lang="en">EN</button>
+      <button class="lang-pill-btn interactive" data-lang="hi">हिंदी</button>
+      <button class="lang-pill-btn interactive" data-lang="bn">বাংলা</button>
+    </div>
     <a href="index.html?stopMusic=true" class="icon-btn interactive return-home-link" title="Return Home">
       <i class="fas fa-home"></i>
     </a>
@@ -335,8 +341,8 @@
   <div class="celebration-wrapper">
     
     <!-- Grand Entrance Headline -->
-    <div class="grand-sub">My Heart Belongs To You...</div>
-    <h1 class="grand-headline">SHE CHOOSE YES! 🎉💖</h1>
+    <div class="grand-sub" data-i18n="celebration_grand_sub">My Heart Belongs To You...</div>
+    <h1 class="grand-headline" data-i18n="celebration_grand_title">SHE CHOOSE YES! 🎉💖</h1>
 
     <!-- 3D Love Certificate -->
     <div class="cert-container shimmer-card">
@@ -351,15 +357,15 @@
       <div class="cert-meta-bar">
         <div class="meta-item"><i class="fas fa-calendar-alt"></i> <span>20 April 2026</span></div>
         <div class="meta-sep">|</div>
-        <div class="meta-item"><i class="fas fa-home"></i> <span>Sweet Home Inauguration & Roka (Aashirwad)</span></div>
+        <div class="meta-item"><i class="fas fa-home"></i> <span data-i18n="celebration_home_roka">Sweet Home Inauguration & Roka (Aashirwad)</span></div>
       </div>
 
       <div class="cert-divider-line"></div>
 
-      <h2 class="cert-promise-title">🌿 Our Forever Promise 🌿</h2>
+      <h2 class="cert-promise-title" data-i18n="celebration_promise_title">🌿 Our Forever Promise 🌿</h2>
       <p class="cert-promise-sub">• 💖 •</p>
 
-      <p class="cert-text">
+      <p class="cert-text" data-i18n="celebration_promise_body">
         On this special day, surrounded by our families,<br>
         we promised to walk through every season of life together.<br>
         This wasn't just our Roka—it was the beginning of our forever.<br>
@@ -374,9 +380,9 @@
         <span class="couple-heart">💖</span>
         <span class="couple-name">Atanu</span>
       </div>
-      <div class="forever-subtitle">— 💕 Forever Starts Here 💕 —</div>
+      <div class="forever-subtitle" data-i18n="celebration_forever_starts">— 💕 Forever Starts Here 💕 —</div>
 
-      <div class="cert-quote-box">
+      <div class="cert-quote-box" data-i18n="celebration_quote">
         <span class="quote-mark">“</span>
         The best decision of my life was finding you. 💖
       </div>
@@ -384,7 +390,7 @@
       <div class="cert-signatures">
         <div class="sig-block">
           <span class="sig-name">Twinkle</span>
-          <span class="sig-title">Forever Mine 💕</span>
+          <span class="sig-title" data-i18n="celebration_forever_mine">Forever Mine 💕</span>
           <span class="sig-dots">• 💕 •</span>
         </div>
 
@@ -394,7 +400,7 @@
 
         <div class="sig-block">
           <span class="sig-name">Atanu</span>
-          <span class="sig-title">Forever Yours 💕</span>
+          <span class="sig-title" data-i18n="celebration_forever_yours">Forever Yours 💕</span>
           <span class="sig-dots">• 💕 •</span>
         </div>
       </div>
@@ -403,13 +409,13 @@
     <!-- Action Toolbar -->
     <div class="celebration-toolbar">
       <button class="btn-primary interactive" id="launch-fireworks-btn">
-        <i class="fas fa-sparkles"></i> Launch Fireworks! 🎆
+        <i class="fas fa-sparkles"></i> <span data-i18n="btn_fireworks">Launch Fireworks! 🎆</span>
       </button>
       <a href="index.html?stopMusic=true" class="btn-primary interactive return-home-link" style="background: rgba(255, 143, 163, 0.2); border: 1px solid var(--primary-rose);">
-        <i class="fas fa-book-open"></i> Replay Our Story 🌸
+        <i class="fas fa-book-open"></i> <span data-i18n="btn_replay">Replay Our Story 🌸</span>
       </a>
       <a href="index.html?stopMusic=true" class="btn-primary interactive return-home-link" style="background: rgba(255, 255, 255, 0.12); border: 1px solid var(--glass-border);">
-        <i class="fas fa-home"></i> Back to Home 🏠
+        <i class="fas fa-home"></i> <span>Back to Home 🏠</span>
       </a>
     </div>
 
@@ -553,6 +559,21 @@
         audio.play().catch(() => {});
       }, { once: true });
     }
+
+    // Initialize Localization for Celebration Page
+    const savedLang = localStorage.getItem('romantic_story_lang') || 'en';
+    if (typeof window.setLanguage === 'function') {
+      window.setLanguage(savedLang, false);
+    }
+
+    document.querySelectorAll('.lang-pill-btn').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const lang = btn.getAttribute('data-lang') || 'en';
+        if (typeof window.setLanguage === 'function') {
+          window.setLanguage(lang, true);
+        }
+      });
+    });
   </script>
 </body>
 </html>

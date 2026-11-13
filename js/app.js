@@ -34,6 +34,61 @@ document.addEventListener('DOMContentLoaded', () => {
     window.audioEngine.updateUI();
   }
 
+  // --- Multi-Language Initialization & Animated Language Gate Logic ---
+  const savedLang = localStorage.getItem('romantic_story_lang') || 'en';
+  if (typeof window.setLanguage === 'function') {
+    window.setLanguage(savedLang, false);
+  }
+
+  const langGate = document.getElementById('language-gate');
+  const langCardBtns = document.querySelectorAll('.lang-card-btn');
+  const langPillBtns = document.querySelectorAll('.lang-pill-btn');
+
+  function dismissLanguageGate(selectedLang) {
+    if (typeof window.setLanguage === 'function') {
+      window.setLanguage(selectedLang, false);
+    }
+    if (langGate) {
+      langGate.classList.add('fade-out');
+      setTimeout(() => {
+        langGate.style.display = 'none';
+      }, 520);
+    }
+  }
+
+  if (langCardBtns.length > 0) {
+    langCardBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        if (e && e.stopPropagation) e.stopPropagation();
+        const lang = btn.getAttribute('data-lang') || 'en';
+        if (window.effectsEngine) {
+          const rect = btn.getBoundingClientRect();
+          window.effectsEngine.spawnSparkleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        }
+        if (window.audioEngine) {
+          window.audioEngine.playHeartChime();
+        }
+        dismissLanguageGate(lang);
+      });
+    });
+  }
+
+  if (langPillBtns.length > 0) {
+    langPillBtns.forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        if (e && e.stopPropagation) e.stopPropagation();
+        const lang = btn.getAttribute('data-lang') || 'en';
+        if (typeof window.setLanguage === 'function') {
+          window.setLanguage(lang, true);
+        }
+        if (window.effectsEngine) {
+          const rect = btn.getBoundingClientRect();
+          window.effectsEngine.spawnSparkleBurst(rect.left + rect.width / 2, rect.top + rect.height / 2);
+        }
+      });
+    });
+  }
+
   // Loading Screen & Auto-play on Landing
   const loadingScreen = document.getElementById('loading-screen');
   const loadingStartBtn = document.getElementById('loading-start-btn');
@@ -401,7 +456,10 @@ document.addEventListener('DOMContentLoaded', () => {
         // Show playful toast message with 3.5s display duration
         if (noToast) {
           if (toastTimer) clearTimeout(toastTimer);
-          noToast.textContent = playfulMessages[(dodgeCount - 1) % playfulMessages.length];
+          const currentLang = window.currentLanguage || 'en';
+          const t = (window.TRANSLATIONS && window.TRANSLATIONS[currentLang]) ? window.TRANSLATIONS[currentLang] : null;
+          const activeMessages = (t && t.playful_messages && t.playful_messages.length > 0) ? t.playful_messages : playfulMessages;
+          noToast.textContent = activeMessages[(dodgeCount - 1) % activeMessages.length];
           noToast.style.opacity = '1';
           noToast.style.visibility = 'visible';
           noToast.style.transform = 'scale(1)';
@@ -419,7 +477,9 @@ document.addEventListener('DOMContentLoaded', () => {
         btnNo.style.display = 'none';
         if (noToast) {
           if (toastTimer) clearTimeout(toastTimer);
-          noToast.textContent = "Oops! The 'No' button ran away forever! Only YES remains! 💖✨";
+          const currentLang = window.currentLanguage || 'en';
+          const t = (window.TRANSLATIONS && window.TRANSLATIONS[currentLang]) ? window.TRANSLATIONS[currentLang] : null;
+          noToast.textContent = (t && t.no_ran_away) ? t.no_ran_away : "Oops! The 'No' button ran away forever! Only YES remains! 💖✨";
           noToast.style.opacity = '1';
           noToast.style.visibility = 'visible';
           noToast.style.transform = 'scale(1)';

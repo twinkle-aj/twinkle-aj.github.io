@@ -49,6 +49,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const bdayStart = new Date(currentYear, birthMonth, birthDay, 0, 0, 0);
     const bdayEnd = new Date(currentYear, birthMonth, birthDay, 23, 59, 59);
 
+    const lang = window.currentLanguage || 'en';
+    const t = (window.TRANSLATIONS && window.TRANSLATIONS[lang]) ? window.TRANSLATIONS[lang] : null;
+
     // --- CASE 2: ON THE BIRTHDAY DATE ITSELF ---
     if (now >= bdayStart && now <= bdayEnd) {
       if (cdDays) cdDays.textContent = '🎉';
@@ -56,8 +59,8 @@ document.addEventListener('DOMContentLoaded', () => {
       if (cdMinutes) cdMinutes.textContent = '💖';
       if (cdSeconds) cdSeconds.textContent = '✨';
 
-      if (sectionTitle) sectionTitle.textContent = "IT'S YOUR BIRTHDAY TODAY! 🎂🎉";
-      if (sectionSub) sectionSub.textContent = 'Today is all about you! Happy Birthday my favorite person in the world! 💕✨';
+      if (sectionTitle) sectionTitle.textContent = t ? t.birthday_today_title : "IT'S YOUR BIRTHDAY TODAY! 🎂🎉";
+      if (sectionSub) sectionSub.textContent = t ? t.birthday_today_sub : 'Today is all about you! Happy Birthday my favorite person in the world! 💕✨';
 
       if (window.effectsEngine && Math.random() < 0.1) {
         window.effectsEngine.spawnSparkleBurst(
@@ -81,8 +84,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
     const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
-    if (sectionTitle) sectionTitle.textContent = 'Countdown to Our Special Day 🎂✨';
-    if (sectionSub) sectionSub.textContent = 'Counting down every second to the day my world became brighter — Your Birthday 💖';
+    if (sectionTitle) sectionTitle.textContent = t ? t.birthday_title : 'Countdown to Our Special Day 🎂✨';
+    if (sectionSub) sectionSub.textContent = t ? t.birthday_subtitle : 'Counting down every second to the day my world became brighter — Your Birthday 💖';
 
     if (cdDays) cdDays.textContent = formatTwoDigits(days);
     if (cdHours) cdHours.textContent = formatTwoDigits(hours);
@@ -92,4 +95,5 @@ document.addEventListener('DOMContentLoaded', () => {
 
   updateCountdown();
   setInterval(updateCountdown, 1000);
+  window.addEventListener('languageChanged', updateCountdown);
 });
