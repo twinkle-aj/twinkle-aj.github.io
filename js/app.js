@@ -268,9 +268,9 @@ document.addEventListener('DOMContentLoaded', () => {
     effectsToggleBtn.addEventListener('click', () => window.effectsEngine && window.effectsEngine.toggleEffects());
   }
 
-  // Album Card Lightbox Click Listener
-  const albumCards = document.querySelectorAll('.album-card');
-  albumCards.forEach((card) => {
+  // Album & Childhood Card Lightbox Click Listener
+  const previewCards = document.querySelectorAll('.album-card, .childhood-card');
+  previewCards.forEach((card) => {
     card.addEventListener('click', () => {
       const img = card.dataset.img;
       const title = card.dataset.title;
@@ -533,24 +533,64 @@ document.addEventListener('DOMContentLoaded', () => {
 
   revealElements.forEach((el) => observer.observe(el));
 
-  // 2. Interactive 3D Card Tilt & Shimmer Effect on Mouse Move
+  // 2. Interactive 3D Card Tilt & Dynamic Glare Effect on Mouse Move
   const tiltCards = document.querySelectorAll('.timeline-card, .album-card, .countdown-box, .childhood-card');
-  tiltCards.forEach((card) => {
-    card.classList.add('shimmer-card');
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = e.clientX - rect.left;
-      const y = e.clientY - rect.top;
-      const centerX = rect.width / 2;
-      const centerY = rect.height / 2;
-      const rotateX = (centerY - y) / 14;
-      const rotateY = (x - centerX) / 14;
+  const isFinePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-      card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.03)`;
-    });
+  if (isFinePointer) {
+    tiltCards.forEach((card) => {
+      let rafId = null;
+      let isHovered = false;
 
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
+      card.addEventListener('mouseenter', () => {
+        isHovered = true;
+        card.style.transition = 'transform 0.12s ease-out, box-shadow 0.3s ease, border-color 0.3s ease';
+      });
+
+      card.addEventListener('mousemove', (e) => {
+        if (!isHovered) return;
+        if (rafId) cancelAnimationFrame(rafId);
+
+        rafId = requestAnimationFrame(() => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          // Normalized tilt angles (max ±9.5deg for refined, responsive 3D perspective)
+          const percentX = (x - centerX) / centerX;
+          const percentY = (y - centerY) / centerY;
+          const maxAngle = 9.5;
+          const rotateX = (-percentY * maxAngle).toFixed(2);
+          const rotateY = (percentX * maxAngle).toFixed(2);
+
+          // Update mouse position for dynamic glass glare reflection
+          const mouseXPercent = ((x / rect.width) * 100).toFixed(1);
+          const mouseYPercent = ((y / rect.height) * 100).toFixed(1);
+          card.style.setProperty('--mouse-x', `${mouseXPercent}%`);
+          card.style.setProperty('--mouse-y', `${mouseYPercent}%`);
+
+          card.style.transform = `perspective(1100px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) translateZ(8px) scale3d(1.025, 1.025, 1.025)`;
+        });
+      });
+
+      card.addEventListener('mouseleave', () => {
+        isHovered = false;
+        if (rafId) cancelAnimationFrame(rafId);
+
+        // Smooth elastic return transition on mouse leave
+        card.style.transition = 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s ease, border-color 0.5s ease';
+        card.style.transform = 'perspective(1100px) rotateX(0deg) rotateY(0deg) translateZ(0px) scale3d(1, 1, 1)';
+
+        // Clear inline transform after return transition finishes so natural CSS rules take back over cleanly
+        setTimeout(() => {
+          if (!isHovered) {
+            card.style.transform = '';
+            card.style.transition = '';
+          }
+        }, 520);
+      });
     });
-  });
+  }
 });

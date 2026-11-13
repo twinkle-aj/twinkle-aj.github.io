@@ -1079,12 +1079,6 @@ body {
 
 .timeline-card {
   padding: 2rem;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
-}
-
-.timeline-card:hover {
-  transform: translateY(-8px);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.4), 0 0 20px var(--rose-glow);
 }
 
 .card-icon {
@@ -1762,14 +1756,7 @@ body {
 .album-card {
   padding: 1.2rem;
   border-radius: 24px;
-  overflow: hidden;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
   cursor: pointer;
-}
-
-.album-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 25px var(--rose-glow);
 }
 
 .album-img-box {
@@ -2038,30 +2025,240 @@ body {
   transform: translateY(0) scale(1);
 }
 
-/* Shimmer Border Animation */
-.shimmer-card {
-  position: relative;
-  overflow: hidden;
+/* ==========================================================================
+   Interactive 3D Card Tilt & Luminous Shine Border System
+   Applies to Childhood Cards, Album Cards, Timeline Cards & Countdown Boxes
+   ========================================================================== */
+
+/* 1. Perspective Containers for Grids */
+.childhood-grid,
+.album-grid,
+.timeline-grid {
+  perspective: 1200px;
 }
 
-.shimmer-card::before {
+/* 2. Base 3D Card Properties */
+.childhood-card,
+.album-card,
+.timeline-card,
+.countdown-box {
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, box-shadow;
+  border-radius: 24px;
+}
+
+/* 3. Luminous Radiant Glow on Hover */
+.childhood-card:hover,
+.album-card:hover,
+.timeline-card:hover,
+.countdown-box:hover {
+  transform: translateY(-8px) scale(1.02);
+  border-color: rgba(255, 224, 130, 0.9) !important;
+  box-shadow:
+    0 24px 50px -10px rgba(0, 0, 0, 0.75),
+    0 0 35px rgba(255, 75, 114, 0.48),
+    0 0 18px rgba(255, 224, 130, 0.65),
+    inset 0 0 18px rgba(255, 224, 130, 0.2) !important;
+}
+
+/* 4. Animated Traveling Starlight Shine Border (Masked Perimeter Ring) */
+.childhood-card::before,
+.album-card::before,
+.timeline-card::before,
+.countdown-box::before {
   content: '';
   position: absolute;
-  top: -50%;
-  left: -50%;
-  width: 200%;
-  height: 200%;
+  inset: -2px;
+  border-radius: inherit;
+  padding: 2px;
   background: linear-gradient(
-    45deg,
+    115deg,
     transparent 0%,
-    rgba(255, 255, 255, 0.05) 45%,
-    rgba(255, 224, 130, 0.25) 50%,
-    rgba(255, 255, 255, 0.05) 55%,
+    rgba(255, 75, 114, 0.3) 15%,
+    rgba(255, 224, 130, 0.95) 45%,
+    #ffffff 50%,
+    rgba(255, 224, 130, 0.95) 55%,
+    rgba(255, 117, 140, 0.35) 75%,
     transparent 100%
   );
-  transform: rotate(30deg);
-  animation: shimmerSweep 6s linear infinite;
+  background-size: 300% 300%;
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  mask-composite: exclude;
   pointer-events: none;
+  opacity: 0;
+  z-index: 10;
+  transition: opacity 0.35s ease;
+}
+
+.childhood-card:hover::before,
+.album-card:hover::before,
+.timeline-card:hover::before,
+.countdown-box:hover::before {
+  opacity: 1;
+  animation: borderShineSweep 3s linear infinite;
+}
+
+@keyframes borderShineSweep {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* 5. Dynamic Cursor Glare & Specular Reflection */
+.childhood-card::after,
+.album-card::after,
+.timeline-card::after,
+.countdown-box::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(
+    circle 320px at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 224, 130, 0.12) 35%,
+    transparent 70%
+  );
+  opacity: 0;
+  pointer-events: none;
+  z-index: 9;
+  transition: opacity 0.35s ease;
+}
+
+.childhood-card:hover::after,
+.album-card:hover::after,
+.timeline-card:hover::after,
+.countdown-box:hover::after {
+  opacity: 1;
+}
+
+/* 6. Deep 3D Parallax Layering for Card Contents */
+
+/* Childhood Cards */
+.polaroid-frame {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.childhood-card:hover .polaroid-frame {
+  transform: translateZ(26px);
+}
+
+.childhood-img-box {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.childhood-card:hover .childhood-img-box {
+  transform: translateZ(16px);
+  box-shadow: 0 16px 32px -8px rgba(0, 0, 0, 0.7);
+}
+
+.childhood-card:hover .childhood-img-box img {
+  transform: scale(1.08);
+}
+
+.polaroid-label {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.childhood-card:hover .polaroid-label {
+  transform: translateZ(22px);
+}
+
+.childhood-card:hover .polaroid-label h3 {
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.6), 0 0 12px var(--gold-glow);
+}
+
+/* Album Cards */
+.album-img-box {
+  transform-style: preserve-3d;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+}
+
+.album-card:hover .album-img-box {
+  transform: translateZ(26px);
+  box-shadow: 0 18px 36px -8px rgba(0, 0, 0, 0.75);
+}
+
+.album-card:hover .album-img-box img {
+  transform: scale(1.08);
+}
+
+.album-info {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.album-card:hover .album-info {
+  transform: translateZ(22px);
+}
+
+.album-card:hover .album-info h3 {
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.6), 0 0 12px var(--gold-glow);
+}
+
+/* Timeline Cards */
+.card-icon {
+  display: inline-block;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.4s ease;
+}
+
+.timeline-card:hover .card-icon {
+  transform: translateZ(36px) scale(1.14);
+  filter: drop-shadow(0 8px 16px rgba(0, 0, 0, 0.6));
+}
+
+.card-date {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-card:hover .card-date {
+  transform: translateZ(22px);
+}
+
+.card-title {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-card:hover .card-title {
+  transform: translateZ(28px);
+  text-shadow: 0 4px 14px rgba(0, 0, 0, 0.6), 0 0 12px var(--gold-glow);
+}
+
+.card-desc,
+.card-details {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-card:hover .card-desc,
+.timeline-card:hover .card-details {
+  transform: translateZ(18px);
+}
+
+/* Countdown Box */
+.countdown-box {
+  transform-style: preserve-3d;
+}
+
+.countdown-box:hover .countdown-number {
+  transform: translateZ(28px);
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.6), 0 0 15px var(--gold-glow);
+}
+
+.countdown-box:hover .countdown-label {
+  transform: translateZ(18px);
 }
 
 /* Compact Storybook Deck Layout */
@@ -2266,12 +2463,6 @@ body {
 .childhood-card {
   padding: 1.2rem;
   border-radius: 24px;
-  transition: all 0.4s var(--transition-smooth);
-}
-
-.childhood-card:hover {
-  transform: translateY(-8px) scale(1.02);
-  box-shadow: 0 18px 40px var(--rose-glow);
 }
 
 .polaroid-frame {
