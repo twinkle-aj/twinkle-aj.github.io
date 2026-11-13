@@ -120,6 +120,8 @@ document.addEventListener('DOMContentLoaded', () => {
         setTimeout(() => {
           window.photoEngine.init();
         }, 60);
+      } else if (window.photoEngine && typeof window.photoEngine.pause === 'function') {
+        window.photoEngine.pause();
       }
     };
 
@@ -152,7 +154,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const shuffleBtn = document.getElementById('shuffle-bubbles-btn');
   if (shuffleBtn) {
     shuffleBtn.addEventListener('click', () => {
-      if (window.photoEngine && window.photoEngine.photos) {
+      if (window.photoEngine && typeof window.photoEngine.shuffle === 'function') {
+        window.photoEngine.shuffle();
+      } else if (window.photoEngine && window.photoEngine.photos) {
         window.photoEngine.photos.sort(() => Math.random() - 0.5);
         window.photoEngine.init();
       }

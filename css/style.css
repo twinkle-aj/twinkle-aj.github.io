@@ -777,16 +777,17 @@ body {
 }
 
 /* Floating Photo Bubbles Area */
+/* Dreamy Soft Photo Bubble Area */
 .bubbles-container {
   position: relative;
   width: 100%;
-  height: 540px;
+  height: 520px;
   margin: 1.5rem 0 2.5rem;
   border-radius: 32px;
   overflow: hidden;
-  background: rgba(18, 7, 30, 0.65);
+  background: radial-gradient(circle at 50% 40%, rgba(38, 16, 58, 0.65) 0%, rgba(14, 5, 24, 0.85) 100%);
   border: 1px solid var(--glass-border);
-  box-shadow: inset 0 0 30px rgba(0, 0, 0, 0.4), 0 15px 45px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 0 45px rgba(0, 0, 0, 0.5), 0 15px 45px rgba(0, 0, 0, 0.5);
 }
 
 .bubbles-header {
@@ -830,42 +831,128 @@ body {
   box-shadow: 0 6px 20px var(--rose-glow);
 }
 
+/* Dreamy Soft Photo Bubble Aesthetics */
 .bubble-item {
   position: absolute;
   top: 0;
   left: 0;
   border-radius: 50%;
   cursor: pointer;
-  box-shadow: 0 8px 32px rgba(255, 75, 114, 0.3), inset 0 0 15px rgba(255, 255, 255, 0.5);
-  border: 3px solid rgba(255, 255, 255, 0.6);
-  backdrop-filter: blur(8px);
-  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+  /* Soft translucent soap-bubble rim */
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
+  /* Multi-layered soft glow with ethereal rose, violet, and golden tint */
+  box-shadow:
+    0 10px 28px rgba(255, 75, 114, 0.28),
+    0 0 22px rgba(186, 147, 255, 0.24),
+    0 0 35px rgba(255, 224, 130, 0.18),
+    inset 0 0 18px rgba(255, 255, 255, 0.55),
+    inset 0 0 10px rgba(255, 117, 140, 0.35);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
   overflow: hidden;
-  animation: bubblePulse 4s ease-in-out infinite alternate;
   will-change: transform;
+  /* Soft fluid organic wobble and breathing glow */
+  animation: bubbleSoftWobble 7s ease-in-out infinite alternate, bubbleSoftGlow 4.5s ease-in-out infinite alternate;
+  transition: box-shadow 0.35s ease, border-color 0.35s ease;
 }
 
-@keyframes bubblePulse {
-  0% { box-shadow: 0 8px 25px rgba(255, 75, 114, 0.3), 0 0 15px rgba(255, 255, 255, 0.4); }
-  100% { box-shadow: 0 15px 40px rgba(255, 75, 114, 0.6), 0 0 25px rgba(255, 224, 130, 0.6); }
+/* Iridescent Soap Bubble Surface Reflection & Rim Sheen */
+.bubble-item::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 35% 28%,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(186, 147, 255, 0.12) 40%,
+    rgba(255, 117, 140, 0.18) 72%,
+    rgba(255, 224, 130, 0.22) 100%
+  );
+  box-shadow:
+    inset 0 2px 6px rgba(255, 255, 255, 0.8),
+    inset 0 -3px 8px rgba(255, 117, 140, 0.35),
+    inset -2px 0 6px rgba(120, 200, 255, 0.25);
+  mix-blend-mode: screen;
+  pointer-events: none;
+  z-index: 3;
+}
+
+/* Delicate Curved Specular Gloss Crescent (Realistic Soap Bubble Highlight) */
+.bubble-item::after {
+  content: '';
+  position: absolute;
+  top: 9%;
+  left: 13%;
+  width: 32%;
+  height: 20%;
+  border-radius: 50%;
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.88) 0%, rgba(255, 255, 255, 0.35) 45%, transparent 75%);
+  transform: rotate(-32deg);
+  pointer-events: none;
+  z-index: 4;
+  filter: blur(0.5px);
 }
 
 .bubble-item img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 50%;
   pointer-events: none;
-  transition: transform 0.4s ease;
+  filter: brightness(1.02) contrast(1.02);
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.35s ease;
 }
 
 .bubble-item:hover {
-  transform: scale(1.12) translateZ(0);
-  z-index: 50 !important;
-  border-color: var(--accent-gold);
+  border-color: rgba(255, 224, 130, 0.85);
+  box-shadow:
+    0 14px 40px rgba(255, 75, 114, 0.5),
+    0 0 32px rgba(186, 147, 255, 0.4),
+    0 0 45px rgba(255, 224, 130, 0.35),
+    inset 0 0 22px rgba(255, 255, 255, 0.75),
+    inset 0 0 12px rgba(255, 117, 140, 0.5);
 }
 
 .bubble-item:hover img {
-  transform: scale(1.1);
+  transform: scale(1.06);
+  filter: brightness(1.06) contrast(1.04);
+}
+
+@keyframes bubbleSoftWobble {
+  0% {
+    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+  }
+  33% {
+    border-radius: 52% 48% 51% 49% / 49% 51% 48% 52%;
+  }
+  66% {
+    border-radius: 48% 52% 49% 51% / 52% 48% 53% 47%;
+  }
+  100% {
+    border-radius: 50% 50% 50% 50% / 50% 50% 50% 50%;
+  }
+}
+
+@keyframes bubbleSoftGlow {
+  0% {
+    box-shadow:
+      0 8px 22px rgba(255, 75, 114, 0.22),
+      0 0 16px rgba(186, 147, 255, 0.18),
+      0 0 28px rgba(255, 224, 130, 0.14),
+      inset 0 0 14px rgba(255, 255, 255, 0.5),
+      inset 0 0 7px rgba(255, 117, 140, 0.28);
+    border-color: rgba(255, 255, 255, 0.45);
+  }
+  100% {
+    box-shadow:
+      0 12px 34px rgba(255, 75, 114, 0.38),
+      0 0 26px rgba(186, 147, 255, 0.3),
+      0 0 42px rgba(255, 224, 130, 0.25),
+      inset 0 0 20px rgba(255, 255, 255, 0.68),
+      inset 0 0 11px rgba(255, 117, 140, 0.42);
+    border-color: rgba(255, 224, 130, 0.65);
+  }
 }
 
 /* Lightbox Modal */
