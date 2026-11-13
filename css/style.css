@@ -157,15 +157,190 @@ body {
 
 .disclaimer-header {
   font-family: var(--font-serif);
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   font-weight: 700;
   color: var(--accent-gold);
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
   text-shadow: 0 0 12px var(--gold-glow);
+}
+
+/* Animated Highlighted Disclaimer Pill Badge */
+.disclaimer-pill-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  background: linear-gradient(135deg, rgba(255, 75, 114, 0.28) 0%, rgba(255, 224, 130, 0.22) 100%);
+  border: 1.5px solid rgba(255, 224, 130, 0.7);
+  padding: 0.45rem 1.25rem;
+  border-radius: 50px;
+  box-shadow: 0 0 20px rgba(255, 75, 114, 0.35), 0 0 12px rgba(255, 224, 130, 0.35);
+  animation: badgePulse 2.6s ease-in-out infinite alternate;
+  font-size: 1.08rem;
+  color: #fff;
+  letter-spacing: 0.2px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Sparkle line light sweep running over the yellow border */
+.disclaimer-pill-badge::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -70%;
+  width: 50%;
+  height: 200%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 224, 130, 0.2) 20%,
+    rgba(255, 255, 255, 0.95) 50%,
+    rgba(255, 224, 130, 0.4) 80%,
+    transparent 100%
+  );
+  transform: rotate(25deg);
+  pointer-events: none;
+  animation: sparkleLineSweep 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+@keyframes sparkleLineSweep {
+  0%, 25% {
+    left: -70%;
+  }
+  65%, 100% {
+    left: 170%;
+  }
+}
+
+/* Animated Sparkling Yellow Line for Special Disclaimer */
+.sparkle-yellow-line-wrap {
+  width: 100%;
+  max-width: 340px;
+  margin: 0.1rem auto 1.05rem;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sparkle-yellow-line {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 224, 130, 0.2) 15%,
+    rgba(255, 224, 130, 0.9) 50%,
+    rgba(255, 224, 130, 0.2) 85%,
+    transparent 100%
+  );
+  position: relative;
+  box-shadow: 0 0 10px rgba(255, 224, 130, 0.5);
+  border-radius: 2px;
+}
+
+.sparkle-tracer-beam {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  width: 65px;
+  height: 5px;
+  margin-top: -2.5px;
+  background: radial-gradient(ellipse at center, #ffffff 0%, rgba(255, 224, 130, 0.9) 50%, transparent 100%);
+  box-shadow: 0 0 12px #ffe082, 0 0 22px #ffffff, 0 0 30px #ff758c;
+  border-radius: 50%;
+  animation: sparkleTravelLine 2.8s ease-in-out infinite alternate;
+  pointer-events: none;
+}
+
+.sparkle-tracer-star {
+  position: absolute;
+  top: 50%;
+  left: 0%;
+  transform: translate(-50%, -50%);
+  font-size: 1.05rem;
+  color: #ffffff;
+  text-shadow: 0 0 8px #ffffff, 0 0 15px #ffe082, 0 0 25px #ff4b72;
+  animation: sparkleStarTravel 2.8s ease-in-out infinite alternate;
+  pointer-events: none;
+  line-height: 1;
+}
+
+@keyframes sparkleTravelLine {
+  0% {
+    left: 4%;
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    left: 82%;
+    opacity: 0.3;
+  }
+}
+
+@keyframes sparkleStarTravel {
+  0% {
+    left: 8%;
+    transform: translate(-50%, -50%) rotate(0deg) scale(0.7);
+    opacity: 0.4;
+  }
+  50% {
+    transform: translate(-50%, -50%) rotate(180deg) scale(1.35);
+    opacity: 1;
+  }
+  100% {
+    left: 92%;
+    transform: translate(-50%, -50%) rotate(360deg) scale(0.7);
+    opacity: 0.4;
+  }
+}
+
+@keyframes badgePulse {
+  0% {
+    transform: scale(0.98);
+    box-shadow: 0 0 15px rgba(255, 75, 114, 0.3), 0 0 8px rgba(255, 224, 130, 0.25);
+    border-color: rgba(255, 224, 130, 0.5);
+  }
+  100% {
+    transform: scale(1.025);
+    box-shadow: 0 0 26px rgba(255, 75, 114, 0.6), 0 0 18px rgba(255, 224, 130, 0.55);
+    border-color: rgba(255, 224, 130, 0.95);
+  }
+}
+
+.badge-sparkle {
+  display: inline-block;
+  animation: sparkleTwinkle 2s ease-in-out infinite alternate;
+}
+
+@keyframes sparkleTwinkle {
+  0% { transform: scale(0.85) rotate(-10deg); opacity: 0.8; }
+  100% { transform: scale(1.22) rotate(15deg); opacity: 1; }
+}
+
+.badge-heart-icon {
+  display: inline-block;
+  animation: heartNudge 1.6s ease-in-out infinite;
+}
+
+@keyframes heartNudge {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.25) rotate(6deg); }
+}
+
+.disclaimer-tag {
+  color: #ffe082;
+  font-weight: 700;
+  display: inline-block;
+  margin-bottom: 0.15rem;
+  text-shadow: 0 0 10px rgba(255, 224, 130, 0.4);
 }
 
 .disclaimer-text {
@@ -2101,8 +2276,16 @@ body {
   }
 
   .disclaimer-header {
-    font-size: 1.2rem !important;
+    font-size: 1.15rem !important;
     margin-bottom: 0.8rem !important;
+  }
+
+  .disclaimer-pill-badge {
+    font-size: 0.92rem !important;
+    padding: 0.4rem 0.95rem !important;
+    gap: 0.35rem !important;
+    flex-wrap: wrap !important;
+    line-height: 1.35 !important;
   }
 
   .disclaimer-text {
